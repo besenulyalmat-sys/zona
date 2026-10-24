@@ -22,6 +22,7 @@
 :root[data-theme="dark"]{--bg:#121917;--panel:#1f2725;--ink:#ece8de;--muted:#a6a297;--line:#36403d;--soft:#2a3431;--sky:#f3e7c4;--btn:#ece8de;--btnInk:#1a201e;color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
+html,body{overflow-x:hidden}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 Rubik,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
 button{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--p3);outline-offset:2px}
@@ -250,6 +251,48 @@ button{font:inherit;color:inherit}
 .bnav .btn{background:#f3d98a;color:#2e1a0b}
 .bclose{position:absolute;right:-6px;top:-10px;width:36px;height:36px;border-radius:50%;border:0;background:#f3d98a;color:#2e1a0b;font-size:18px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.4);z-index:2}
 
+
+.pc::before{content:"";position:absolute;inset:-28%;border-radius:50%}
+.pc.sel{z-index:9;box-shadow:0 0 0 .6cqw #fff,0 0 0 1.1cqw var(--c),0 .5cqw 1.4cqw rgba(0,0,0,.4)}
+.ghost{position:absolute;width:calc(100% / 15 * .92);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:.5cqw dashed var(--c);background:rgba(255,255,255,.78);box-shadow:0 0 0 .4cqw rgba(0,0,0,.25);z-index:9;display:grid;place-items:center;font-size:2.6cqw;cursor:pointer;animation:ghostP 1s ease-in-out infinite;padding:0;color:#2a2925}
+.ghost.danger{border-color:#c8372d;background:rgba(255,120,100,.45)}
+@keyframes ghostP{50%{transform:translate(-50%,-50%) scale(1.12)}}
+.boss{position:absolute;width:calc(100% / 15 * 1.05);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 40% 35%,#8b5cf6,#3b0764 70%);box-shadow:0 0 0 .5cqw #facc15,0 0 2cqw #a855f7;display:grid;place-items:center;font-size:3.6cqw;z-index:7;transition:left .16s,top .16s;pointer-events:none}
+.boss.rest{filter:grayscale(.4) brightness(.85);box-shadow:0 0 0 .5cqw #94a3b8}
+.boss.rest::after{content:"💤";position:absolute;right:-30%;top:-40%;font-size:2.4cqw}
+.boss.hunt{animation:bossP .9s ease-in-out infinite}
+@keyframes bossP{50%{box-shadow:0 0 0 .5cqw #facc15,0 0 3.5cqw #d946ef}}
+.callout{position:absolute;transform:translate(-50%,-50%);z-index:46;pointer-events:none;display:flex;align-items:center;gap:.8cqw;background:#1f1630;color:#fff;border:.4cqw solid var(--c);border-radius:2cqw;padding:.6cqw 1.6cqw .6cqw .6cqw;font-family:Unbounded,Rubik,sans-serif;font-weight:800;font-size:2.6cqw;white-space:nowrap;animation:callout 1.7s ease forwards;box-shadow:0 1cqw 2cqw rgba(0,0,0,.4)}
+.callout img,.callout b{width:5.4cqw;height:5.4cqw;background:#fffaf0;border-radius:50%;padding:.3cqw;display:grid;place-items:center;font-size:3.4cqw}
+@keyframes callout{0%{opacity:0;transform:translate(-50%,-20%) scale(.5)}15%{opacity:1;transform:translate(-50%,-90%) scale(1.15)}30%{transform:translate(-50%,-90%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-150%)}}
+.dock{display:grid;gap:12px}
+.trow{display:flex;align-items:center;gap:8px}
+.timer{position:relative;flex:1;height:9px;border-radius:99px;background:var(--soft);overflow:hidden;box-shadow:inset 0 0 0 1px var(--line)}
+.timer i{position:absolute;inset:0 auto 0 0;background:var(--c,#2f8a4a);border-radius:99px;transition:width .25s linear}
+.timer.low i{background:#c8372d;animation:blink .5s infinite}
+.tnum{font-family:Unbounded,Rubik,sans-serif;font-weight:600;font-size:14px;min-width:34px;text-align:right}
+.fold summary{font-family:Unbounded,Rubik,sans-serif;font-weight:600;font-size:15px;cursor:pointer;padding:4px 0}
+.fold>div,.fold>ol{margin-top:8px}
+.skins{display:flex;flex-wrap:wrap;gap:8px}
+.skinb{background:var(--soft);border:2px solid var(--line);border-radius:12px;padding:6px;cursor:pointer;display:grid;gap:4px;justify-items:center;font-size:13px;min-width:78px}
+.skinb[aria-pressed="true"]{border-color:var(--p2);box-shadow:0 0 0 3px color-mix(in srgb,var(--p2) 35%,transparent)}
+.skinb .mini{display:block;width:64px;height:40px;border-radius:8px}
+.skinb .die{width:38px;height:38px;padding:5px;border-radius:9px}
+.die.d-gold{background:linear-gradient(145deg,#ffe48a,#d4a017);box-shadow:inset 0 0 0 2px #7a5a00,0 3px 0 #7a5a00}.die.d-gold i.on{background:#3b2a00}
+.die.d-neon{background:#140f24;box-shadow:inset 0 0 0 2px #a855f7,0 0 12px #a855f7}.die.d-neon i.on{background:#f0abfc;box-shadow:0 0 6px #e879f9}
+.die.d-asyk{background:radial-gradient(circle at 35% 30%,#fff3dc,#d9b98a);border-radius:40% 46% 38% 50%;box-shadow:inset 0 0 0 2px #8a6a3a,0 3px 0 #8a6a3a}.die.d-asyk i.on{background:#6b3f1d}
+.board.s-yurt{--birch:#f7e6c4;--burn:#7a1f1f;--wood:#7d1a1a;--wood2:#ad2f28;background:radial-gradient(circle,rgba(255,214,140,.22) 0 22%,transparent 23%) 0 0/6.6667% 6.6667%,repeating-linear-gradient(45deg,rgba(255,214,140,.08) 0 2px,transparent 2px 14px),linear-gradient(160deg,var(--wood2),var(--wood))}
+.board.s-night{--birch:#202a52;--burn:#d9b65a;--wood:#0b1026;--wood2:#241a57;background:radial-gradient(1.5px 1.5px at 12% 18%,#fff,transparent),radial-gradient(1.5px 1.5px at 82% 12%,#fff,transparent),radial-gradient(1px 1px at 30% 86%,#fff,transparent),radial-gradient(1.5px 1.5px at 90% 80%,#fff,transparent),radial-gradient(1px 1px at 8% 70%,#fff,transparent),linear-gradient(160deg,var(--wood2),var(--wood))}
+.board.s-night .cell.safe{background:#2f3c72}.board.s-night .cell.home{background:color-mix(in srgb,var(--c) 55%,#202a52)}
+.board.s-pixel{--birch:#f4f4e8;--burn:#222;--wood:#3a7d44;--wood2:#4a9d54;border-radius:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.1) 0 3px,transparent 3px 12px),repeating-linear-gradient(90deg,rgba(0,0,0,.1) 0 3px,transparent 3px 12px),var(--wood2)}
+.board.s-pixel .cell{box-shadow:inset 0 0 0 .3cqw var(--burn)}.board.s-pixel .yard,.board.s-pixel .slot,.board.s-pixel .hub{border-radius:0}.board.s-pixel .pc{border-radius:14%}
+#hills{position:fixed;left:0;right:0;bottom:0;width:100%;height:18vh;z-index:-1;pointer-events:none;fill:var(--hill,#6b8f5e);opacity:.35}
+#hills .h2{opacity:.65}
+body.g-yurt{--hill:#8a1e1e;background:radial-gradient(circle at 15% 20%,rgba(173,47,40,.14),transparent 45%),radial-gradient(circle at 85% 70%,rgba(224,162,26,.14),transparent 45%),var(--bg)}
+body.g-night{--hill:#241a57;--sky:#f3e7c4;background:linear-gradient(#0b1026,#2a1b5c) fixed}
+body.g-night .brand{color:#f3e7c4}
+body.g-pixel{--hill:#2f6b38;background:repeating-linear-gradient(0deg,rgba(0,0,0,.04) 0 2px,transparent 2px 16px),repeating-linear-gradient(90deg,rgba(0,0,0,.04) 0 2px,transparent 2px 16px),var(--bg)}
+body.g-pixel #hills{shape-rendering:crispEdges}
 @media (max-width:900px){
   .homeScr{grid-template-columns:1fr;gap:10px;padding-top:4px}
   .lobby{grid-template-columns:1fr}
@@ -260,6 +303,23 @@ button{font:inherit;color:inherit}
   .spread::after{display:none}
   .pg{border-radius:8px!important}
   .pg.p2{display:none}
+}
+@media (max-width:700px){
+  .gbar{padding:8px 10px 0;gap:6px}.brand{font-size:16px}.ib .t{display:none}.ib{padding:6px 10px;font-size:16px}
+  .chips{gap:6px}.chip{font-size:12px;padding:3px 9px}
+  .app{gap:8px;grid-template-columns:minmax(0,1fr)}
+  .boardWrap{max-width:min(100%,calc(100svh - 300px));min-width:280px}
+  .dock{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--panel);border-top:1px solid var(--line);border-radius:18px 18px 0 0;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 30px rgba(0,0,0,.2);gap:8px;max-height:46vh;overflow:auto}
+  #scrGame.on{padding-bottom:230px}
+  .die{width:52px;height:52px;padding:7px}
+  .turn{font-size:15px}
+  .hint{font-size:14px;padding:6px 8px;min-height:0}
+  .btn{padding:12px 14px}
+  .pls{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .plr .sc{font-size:11px}
+  .plr{font-size:13px;padding:5px 6px}
+  .season{font-size:13px}
+  .tip{top:calc(56px + env(safe-area-inset-top,0px));bottom:auto;right:10px;left:10px;max-width:none}
 }
 @media (prefers-reduced-motion:reduce){
   .ring,.ring img,.hub,.cell.safe{background:color-mix(in srgb,#fff 45%,var(--birch));font-size:3.4cqw}
@@ -272,12 +332,13 @@ button{font:inherit;color:inherit}
 </head>
 <body>
 <canvas id="sky" aria-hidden="true"></canvas>
+<svg id="hills" viewBox="0 0 1440 200" preserveAspectRatio="none" aria-hidden="true"><path d="M0 200L0 120C120 90 200 60 320 80C440 100 520 40 660 50C800 60 860 110 980 100C1100 90 1180 40 1300 60C1380 72 1420 90 1440 95L1440 200Z"/><path class="h2" d="M0 200L0 150C160 130 260 120 420 135C580 150 700 120 860 128C1020 136 1140 150 1280 140C1360 134 1420 140 1440 142L1440 200Z"/></svg>
 <header class="gbar">
   <span class="brand">Зона Зодиака</span>
   <div class="gctl">
-    <button class="ib" id="bBook">📖 Книга</button>
-    <button class="ib" id="bMusic" aria-pressed="false">🎵 Музыка</button>
-    <button class="ib" id="bSfx" aria-pressed="true">🔊 Звук</button>
+    <button class="ib" id="bBook" aria-label="Книга">📖<span class="t"> Книга</span></button>
+    <button class="ib" id="bMusic" aria-pressed="false" aria-label="Музыка">🎵<span class="t"> Музыка</span></button>
+    <button class="ib" id="bSfx" aria-pressed="true" aria-label="Звук и вибрация">🔊<span class="t"> Звук</span></button>
     <button class="ib" id="bMic" hidden>🎙️ Микрофон</button>
     <button class="ib" id="bLeave" hidden>Выйти</button>
   </div>
@@ -301,7 +362,7 @@ button{font:inherit;color:inherit}
 
 <section id="scrGame" class="screen">
   <div class="app">
-    <div class="chips"><span class="chip" id="chipRound"></span><span class="chip" id="chipSeason"></span><span class="chip" id="chipAwake"></span></div>
+    <div class="chips"><span class="chip" id="chipRound"></span><span class="chip" id="chipSeason"></span><span class="chip" id="chipAwake"></span><span class="chip" id="chipBoss"></span></div>
     <div class="boardCol">
       <div class="boardWrap" id="boardWrap">
         <div class="board" id="board" aria-label="Игровое поле"></div>
@@ -314,15 +375,16 @@ button{font:inherit;color:inherit}
     </div>
     <aside class="panel">
       <div class="pls" id="pls"></div>
-      <div class="turn" id="turnBox"></div>
+      <div class="dock" id="dock">
+        <div class="turn" id="turnBox"></div>
+        <div class="trow" id="trow" hidden><div class="timer" id="timer"><i></i></div><span class="tnum" id="tnum"></span></div>
+        <div class="diceRow"><div class="die empty" id="die">?</div><div class="actions" id="actions"></div></div>
+        <p class="hint" id="hint"></p>
+        <div class="choices" id="choices"></div>
+      </div>
       <p class="season" id="seasonLine"></p>
-      <div class="diceRow"><div class="die empty" id="die">?</div><div class="actions" id="actions"></div></div>
-      <p class="hint" id="hint"></p>
-      <div class="choices" id="choices"></div>
-      <h2 id="squadTitle">Отряд</h2>
-      <div class="squad" id="squad"></div>
-      <h2>Ход игры</h2>
-      <ol class="log" id="log"></ol>
+      <details class="fold" id="fSquad"><summary id="squadTitle">Мой отряд</summary><div class="squad" id="squad"></div></details>
+      <details class="fold" id="fLog"><summary>Ход игры</summary><ol class="log" id="log"></ol></details>
     </aside>
   </div>
 </section>
@@ -372,7 +434,7 @@ const EL={
 };
 const EL_ORDER=['fire','earth','air','water'];
 const HEROES={
-  aries:{name:'Овен',el:'fire',ab:'Таран',d:'Враги, через которых проходит Овен, отлетают на 2 клетки назад. Если за ход он прошёл 4+ клетки и атакует, получает +2 за разгон.',u:'Отбрасывает на 4 клетки, разгон даёт +3.'},
+  aries:{name:'Овен',el:'fire',ab:'Таран',d:'Враги на его пути и враг прямо перед ним после хода отлетают на 2 клетки назад. Если за ход он прошёл 4+ клетки и атакует, получает +2 за разгон.',u:'Отбрасывает на 4 клетки, разгон даёт +3.'},
   leo:{name:'Лев',el:'fire',ab:'Рык',d:'Сильнейший в дуэлях: +1 к броску и в атаке, и в защите.',u:'+2 к броску и дополнительный бросок после победы в дуэли.'},
   sagittarius:{name:'Стрелец',el:'fire',ab:'Выстрел',d:'Вместо хода стреляет во врага до 3 клеток впереди. Промах ничего не стоит. Перезарядка 3 хода.',u:'Дальность 5 клеток, перезарядка 2 хода.'},
   taurus:{name:'Телец',el:'earth',ab:'Броня',d:'Первое поражение в дуэли не срубает: Телец отходит на клетку и стоит 1 ход.',u:'Броня восстанавливается через 3 хода.'},
@@ -380,7 +442,7 @@ const HEROES={
   capricorn:{name:'Козерог',el:'earth',ab:'Упрямство',d:'Его ничем нельзя отбросить назад: ни тараном, ни Весами, ни картами судьбы. В защите +1.',u:'В защите +2.'},
   gemini:{name:'Близнецы',el:'air',ab:'Двойник',d:'Первую атаку принимает приманка, а Близнецы отскакивают на 2 клетки вперёд.',u:'Приманка восстанавливается через 3 хода.'},
   libra:{name:'Весы',el:'air',ab:'Равновесие',d:'Если Весы проигрывают дуэль, победитель откатывается на 3 клетки.',u:'Победитель откатывается на 6 клеток.'},
-  aquarius:{name:'Водолей',el:'air',ab:'Поток',d:'Ныряет в Колесо на любом броске, а не только на 1–2.',u:'Проходит Колесо насквозь за один ход.'},
+  aquarius:{name:'Водолей',el:'air',ab:'Поток',d:'Ныряет в Колесо на любом броске, а не только на 1–3.',u:'Проходит Колесо насквозь за один ход.'},
   cancer:{name:'Рак',el:'water',ab:'Панцирь',d:'Может пойти назад на выпавшее число. Перезарядка 2 хода.',u:'Без перезарядки, а при атаке задом наперёд +2 в дуэли.'},
   scorpio:{name:'Скорпион',el:'water',ab:'Яд',d:'Тот, кто победил Скорпиона в дуэли, пропускает следующий ход.',u:'Яд действует 2 хода.'},
   pisces:{name:'Рыбы',el:'water',ab:'Течение',d:'Вместо хода меняются местами с любой фишкой в пределах 4 клеток. Перезарядка 4 хода.',u:'Меняются с любой фишкой на дорожке, перезарядка 3 хода.'}
@@ -396,6 +458,18 @@ const FATE=[
   {t:'Портал',d:'Эта фишка сразу выходит у дальних врат.',f:(o,pc)=>{if(pc.state==='hub'){pc.state='track';pc.p=pc.hubExit}}},
   {t:'Попутный ветер',d:'Все твои фишки на дорожке шагают на клетку вперёд.',f:(o)=>{piecesOf(o).forEach(e=>{if(onTrack(e)&&e.p<50)e.p++})}}
 ];
+const SKINS={wood:{name:'Дерево',prev:'linear-gradient(160deg,#8f5a2f,#7b4a25)'},yurt:{name:'Юрта',prev:'radial-gradient(circle,rgba(255,214,140,.5) 0 20%,transparent 22%) 0 0/12px 12px,linear-gradient(160deg,#ad2f28,#7d1a1a)'},night:{name:'Ночное небо',prev:'radial-gradient(1.5px 1.5px at 30% 30%,#fff,transparent),radial-gradient(1.5px 1.5px at 70% 60%,#fff,transparent),linear-gradient(160deg,#241a57,#0b1026)'},pixel:{name:'Пиксели',prev:'repeating-linear-gradient(90deg,#3a7d44 0 8px,#4a9d54 8px 16px)'}};
+const DICE={classic:'Классика',gold:'Золото',neon:'Неон',asyk:'Асык'};
+const BOTLV={easy:'Лёгкие',normal:'Обычные',hard:'Хитрые'};
+const BOSS={first:5,hunt:3,rest:2,respawn:8};
+const ABFX={
+  aries:{t:'Таран!',col:['#ff6b2c','#ffb02e','#fff'],s:'ram'},leo:{t:'Рык!',col:['#ffd23f','#ff9f1c','#fff'],s:'roar'},
+  sagittarius:{t:'Выстрел!',col:['#ffb02e','#fff'],s:'shoot'},taurus:{t:'Броня!',col:['#cbd5e1','#94a3b8','#fff'],s:'shield'},
+  virgo:{t:'Расчёт!',col:['#86efac','#22c55e','#fff'],s:'chime'},capricorn:{t:'Упрямство!',col:['#a16207','#78350f','#fde68a'],s:'thud'},
+  gemini:{t:'Двойник!',col:['#e0f2fe','#7dd3fc','#fff'],s:'glass'},libra:{t:'Равновесие!',col:['#fde68a','#facc15','#fff'],s:'chime'},
+  aquarius:{t:'Поток!',col:['#38bdf8','#0ea5e9','#e0f2fe'],s:'water'},cancer:{t:'Панцирь!',col:['#f87171','#ef4444','#fff'],s:'crab'},
+  scorpio:{t:'Яд!',col:['#4ade80','#16a34a','#bbf7d0'],s:'freeze'},pisces:{t:'Течение!',col:['#2fa8ff','#8fd8ff','#fff'],s:'swap'}
+};
 const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
 const isEmo=r=>/\p{Extended_Pictographic}/u.test(r)&&[...r].length<=2;
 const REACTS=['😂','😎','🔥','💀','😭','🤡','👀','🙏','😤','🫡','🥶','⚔️','🏹','🎲','🐢','💅','GG','Изи','Это база','Кринж','Ну ты и Скорпион','Тюрьма плачет по тебе','Я ещё вернусь','Без шансов','Ой всё','Красиво!'];
@@ -411,7 +485,9 @@ const HINT={
 const TIPS={
   duel:['Дуэль!','Оба бросают кубик, атакующий получает +1. Ничья — оба отскакивают. Всё честно, почти 😅'],
   prison:['Тюрьма','Герой выйдет на 6 или через 2 хода. Пройди через старт тюремщика — и устроишь побег 🏃'],
-  gate:['Врата ✦','На 1–2 можно нырнуть в Колесо и срезать полкруга. Риск — дело благородное 🎰'],
+  gate:['Врата ✦','На 1–3 можно нырнуть в Колесо и срезать полкруга. Риск — дело благородное 🎰'],
+  boss:['🐍 Змееносец','Мини-босс сам ползёт по полю и глотает всех на пути. Когда он спит 💤, на него можно напасть. Победишь — получишь награду 🏆'],
+  preview:['Превью хода','Нажми на фишку — кружок покажет, куда она встанет. Нажми на кружок или ещё раз на фишку, чтобы сходить 👆'],
   season:['Новый сезон','Одна стихия сейчас сильнее. Посмотри сверху, кто на хайпе 📈'],
   awaken:['Пробуждение звёзд','Все способности прокачались. Теперь точно без жалости ⚡'],
   ability:['Способность','Иногда вместо броска можно применить способность героя. Кнопка рядом с кубиком 👆'],
@@ -471,8 +547,19 @@ const SFX={
   freeze:t=>{osc('sine',1500,t,.35,.12,2600);noise(t,.3,.15,7000)},
   bad:t=>osc('sawtooth',210,t,.3,.14,110),
   knock:t=>{osc('triangle',180,t,.08,.4);osc('triangle',180,t+.16,.08,.4)},
+  ram:t=>{osc('square',95,t,.25,.3,40);noise(t,.2,.5,300)},
+  roar:t=>{noise(t,.7,.7,380);osc('sawtooth',120,t,.6,.18,65)},
+  shield:t=>{osc('square',1200,t,.25,.07);osc('square',1800,t+.03,.2,.05);osc('triangle',600,t,.4,.2)},
+  chime:t=>{[1320,1760,2640].forEach((f,i)=>osc('sine',f,t+i*.06,.4,.12))},
+  thud:t=>{osc('sine',85,t,.3,.4,40);noise(t,.15,.4,220)},
+  glass:t=>{osc('sine',2400,t,.18,.12);osc('sine',3200,t+.05,.2,.1);noise(t,.1,.2,8000)},
+  water:t=>{noise(t,.6,.4,700);osc('sine',420,t,.5,.15,180)},
+  crab:t=>{for(let i=0;i<4;i++)osc('square',900,t+i*.07,.03,.08)},
+  hiss:t=>noise(t,.12,.15,6500),
+  bossRoar:t=>{osc('sawtooth',75,t,1.2,.3,45);noise(t,1,.5,300);osc('square',150,t+.2,.8,.06,90)},
   spinEnd:t=>{[523,784,1046].forEach((f,i)=>pluck(f,t+i*.06,.6));noise(t,.4,.2,5000)}
 };
+function vib(p){if(!AU.sfx||!navigator.vibrate)return;try{navigator.vibrate(p)}catch(e){}}
 function sfx(n){if(!AU.sfx)return;const c=actx();if(!c)return;try{SFX[n]&&SFX[n](c.currentTime+.01)}catch(e){}}
 const SCALE=[220,261.6,293.7,329.6,392,440,523.3,587.3,659.3];
 function musicStart(){const c=actx();if(!c||AU.timer)return;AU.next=c.currentTime+.15;AU.step=0;AU.mel=4;AU.timer=setInterval(musicTick,60)}
@@ -555,7 +642,7 @@ function linkFor(code,key){return location.origin+location.pathname+'?room='+cod
 function connMsg(t){const c=$('#conn');if(!t){c.classList.remove('show');return}c.textContent=t;c.classList.add('show')}
 
 /* ---------- host ---------- */
-function newLobby(code){return{mode:'online',code,key:uid(6),exp:Date.now()+30*60e3,expMin:30,approval:true,goal:2,started:false,banned:[],seats:[{kind:'human',ctrl:'host',name:myName(),online:true,pref:null},{kind:'none'},{kind:'none'},{kind:'none'}]}}
+function newLobby(code){return{mode:'online',code,key:uid(6),exp:Date.now()+30*60e3,expMin:30,locked:false,goal:2,timer:20,bots:'normal',skin:'wood',started:false,banned:[],bannedNames:[],seats:[{kind:'human',ctrl:'host',name:myName(),online:true,pref:null,dice:store.get('zz_dice','classic')},{kind:'none'},{kind:'none'},{kind:'none'}]}}
 function hostCreate(){
   GEN++;const code=uid(6);L=newLobby(code);me={role:'host',ctrl:'host',seat:0};NET.members=[];NET.pending=[];S=null;
   history.replaceState(null,'','?host='+code+(FAKE?'&net=local':''));
@@ -607,16 +694,17 @@ function hostOnData(conn,d){
         toastLobby(`${esc(old.name)} вернулся`);return;
       }
       if(L.started){send(conn,{t:'reject',why:'Игра уже идёт. Новые игроки смогут зайти в следующей партии.'});return}
+      if(L.locked){send(conn,{t:'reject',why:'Хозяин закрыл вход в комнату.'});return}
       if(d.key!==L.key){send(conn,{t:'reject',why:'Эта ссылка больше не действует. Попроси у хозяина новую.'});return}
       if(Date.now()>L.exp){send(conn,{t:'reject',why:'Срок действия ссылки истёк. Попроси у хозяина новую.'});return}
       if(!L.seats.some(s=>s.kind!=='human')){send(conn,{t:'reject',why:'Комната заполнена.'});return}
       const entry={token,name,conn};
-      if(L.approval){NET.pending=NET.pending.filter(x=>x.token!==token);NET.pending.push(entry);send(conn,{t:'wait'});sfx('knock');renderLobby()}
-      else acceptMember(entry);
+      NET.pending=NET.pending.filter(x=>x.token!==token);NET.pending.push(entry);send(conn,{t:'wait'});sfx('knock');vib([60,60,60]);renderLobby();
       return;
     }
     case 'ping':return;
     case 'pref':if(m&&!L.started&&EL[d.el]){const st=L.seats[m.seat];if(st&&st.ctrl===m.token){st.pref=d.el;sendLobby();renderLobby()}}return;
+    case 'dice':if(m&&!L.started&&DICE[d.v]){const st=L.seats[m.seat];if(st&&st.ctrl===m.token){st.dice=d.v;sendLobby();renderLobby()}}return;
     case 'intent':if(m&&S)handleIntent(m.token,d.a);return;
     case 'react':if(m)relayReact(m.seat,d.x,m.token);return;
     case 'voice':if(m){m.voice=!!d.on;sendRoster()}return;
@@ -626,7 +714,7 @@ function hostOnData(conn,d){
 function acceptMember(e){
   let seat=L.seats.findIndex(s=>s.kind==='none');if(seat<0)seat=L.seats.findIndex(s=>s.kind==='bot');
   if(seat<0){send(e.conn,{t:'reject',why:'Комната заполнена.'});return}
-  L.seats[seat]={kind:'human',ctrl:e.token,name:e.name,online:true,pref:null};
+  L.seats[seat]={kind:'human',ctrl:e.token,name:e.name,online:true,pref:null,dice:'classic'};
   NET.members=NET.members.filter(x=>x.token!==e.token);
   NET.members.push({token:e.token,name:e.name,conn:e.conn,seat,online:true,seen:Date.now(),peerId:e.conn.peer,voice:false});
   NET.pending=NET.pending.filter(x=>x!==e);
@@ -637,14 +725,15 @@ function freeSeat(s){L.seats[s]={kind:'none'}}
 function kickSeat(s){
   const st=L.seats[s];if(!st||st.kind!=='human'||st.ctrl==='host')return;
   const m=NET.members.find(x=>x.token===st.ctrl);
+  L.bannedNames.push((st.name||'').toLowerCase());
   if(m){L.banned.push(m.token);send(m.conn,{t:'kicked'});later(()=>{try{m.conn&&m.conn.close()}catch(e){}},300);NET.members=NET.members.filter(x=>x!==m)}
   if(L.started&&S){S.players[s].kind='bot';S.players[s].ctrl='bot';S.players[s].online=true;S.players[s].name=st.name+' 🤖';log(`${stag(s)} удалён из игры. Дальше за него играет бот.`);L.seats[s]={kind:'bot',name:S.players[s].name};render();if(S.cur===s&&(S.phase==='preroll'||S.phase==='rolled'))scheduleAuto()}
   else freeSeat(s);
   sendLobby();sendRoster();renderLobby();
 }
-function publicLobby(){return{mode:'online',code:L.code,exp:L.exp,approval:L.approval,goal:L.goal,started:L.started,seats:L.seats.map(s=>({kind:s.kind,name:s.name||'',online:s.kind==='human'?!!s.online:true,pref:s.pref||null,host:s.ctrl==='host'}))}}
+function publicLobby(){return{mode:'online',code:L.code,exp:L.exp,locked:L.locked,goal:L.goal,timer:L.timer,bots:L.bots,skin:L.skin,started:L.started,seats:L.seats.map(s=>({kind:s.kind,name:s.name||'',online:s.kind==='human'?!!s.online:true,pref:s.pref||null,dice:s.dice||'classic',host:s.ctrl==='host'}))}}
 function sendLobby(){if(me.role!=='host')return;const pl=publicLobby();for(const m of NET.members)if(m.online&&m.conn)send(m.conn,{t:'lobby',l:pl,you:m.seat});hostSave()}
-function snapshot(){return JSON.parse(JSON.stringify({...S,players:S.players.map(p=>({...p,ctrl:p.ctrl==='host'?'host':p.ctrl==='bot'?'bot':'h'}))}))}
+function snapshot(){return JSON.parse(JSON.stringify({...S,tl:S.tEnd?S.tEnd-Date.now():null,players:S.players.map(p=>({...p,ctrl:p.ctrl==='host'?'host':p.ctrl==='bot'?'bot':'h'}))}))}
 function sendStateTo(conn){send(conn,{t:'state',s:S?snapshot():null})}
 function queueState(){if(me.role!=='host'||NET.qs)return;NET.qs=true;queueMicrotask(()=>{NET.qs=false;const snap=S?snapshot():null;for(const m of NET.members)if(m.online&&m.conn)send(m.conn,{t:'state',s:snap});hostSave()})}
 function broadcast(msg,exceptToken){if(me.role!=='host')return;for(const m of NET.members)if(m.online&&m.conn&&m.token!==exceptToken)send(m.conn,msg)}
@@ -694,10 +783,10 @@ function clientEnd(text){NET.closed=true;clearInterval(NET.hb);voiceStop();try{N
 function clientOnData(d){
   if(!d||typeof d!=='object')return;
   switch(d.t){
-    case 'welcome':me.seat=d.you;connMsg('');break;
+    case 'welcome':me.seat=d.you;connMsg('');{const dv=store.get('zz_dice','classic');if(DICE[dv])send(NET.hostConn,{t:'dice',v:dv})}break;
     case 'wait':connMsg('Стучимся в комнату. Ждём, пока хозяин впустит тебя…');break;
     case 'lobby':connMsg('');L=d.l;me.seat=d.you;if(!L.started&&UI.screen!=='lobby')showScreen('lobby');else if(UI.screen==='lobby')renderLobby();break;
-    case 'state':{const was=S&&S.gid;S=d.s;if(!S){if(UI.screen==='game'){closeModal();showScreen('lobby')}break}
+    case 'state':{const was=S&&S.gid;S=d.s;UI.tEnd=S&&S.tl!=null?Date.now()+S.tl:null;if(!S){if(UI.screen==='game'){closeModal();showScreen('lobby')}break}
       if(UI.screen!=='game'||was!==S.gid)showScreen('game');renderGame();break}
     case 'fx':playFx(d.k,d.d||{});break;
     case 'react':showReact(d.seat,d.x);break;
@@ -768,9 +857,15 @@ function playFx(k,d){
   switch(k){
     case 'dice':diceAnim(d.v);sfx('dice');break;
     case 'step':sfx('step');break;
-    case 'duel':showDuel(d);sfx('clash');tip('duel');break;
+    case 'duel':showDuel(d);sfx('clash');tip('duel');if(S&&[P(d.a),P(d.d)].some(x=>x&&isMySeat(x.owner)))vib([60,40,60]);break;
+    case 'bossDuel':showBossDuel(d);sfx('clash');vib([60,40,60]);break;
+    case 'ab':callout(d);break;
+    case 'hiss':sfx('hiss');break;
+    case 'boss':banner('🐍 Змееносец проснулся!','#5b21b6');burst(d.r,d.c,['#a855f7','#facc15','#ffffff','#22c55e'],70,{sp:.22});sfx('bossRoar');vib([200,80,200]);tip('boss');break;
+    case 'bossDown':banner('⚔️ Змееносец повержен!','#2f8a4a');burst(d.r,d.c,['#facc15','#a855f7','#ffffff'],90,{sp:.26,up:.1});sfx('win');break;
+    case 'bossWake':banner('🐍 Змееносец снова на охоте','#5b21b6');sfx('bossRoar');break;
     case 'decoy':showDecoy(d);sfx('swap');break;
-    case 'capture':shake();burst(d.r,d.c,d.prison?['#9aa0a6','#5f6368','#e8eaed',d.col]:['#ff5a36','#ffb02e','#ffffff',d.col],34,{sp:.16});sfx(d.prison?'prison':'capture');if(d.prison)tip('prison');break;
+    case 'capture':if(d.seat!=null&&isMySeat(d.seat))vib(220);shake();burst(d.r,d.c,d.prison?['#9aa0a6','#5f6368','#e8eaed',d.col]:['#ff5a36','#ffb02e','#ffffff',d.col],34,{sp:.16});sfx(d.prison?'prison':'capture');if(d.prison)tip('prison');break;
     case 'home':burst(d.r,d.c,['#ffd700','#fff3a0','#ffffff',d.col],40,{sp:.14,up:.08});sfx('home');break;
     case 'fate':showFate(d);sfx('fate');burst(7.5,7.5,['#c9a64a','#f3d98a','#a78bfa','#ffffff'],50,{sp:.18});break;
     case 'toast':toast(d.title,d.text);break;
@@ -783,13 +878,16 @@ function playFx(k,d){
     case 'poison':burst(d.r,d.c,['#4ade80','#16a34a','#bbf7d0'],22,{sp:.08,g:-.002});sfx('freeze');break;
     case 'free':burst(d.r,d.c,['#fde047','#ffffff'],30);sfx('home');break;
     case 'turn':onTurnFx(d.seat);break;
-    case 'win':showWin(d.seat);break;
+    case 'win':showWin(d.seat);vib([100,60,100,60,220]);break;
     case 'bookopen':if(!$('#book').classList.contains('show'))openBook();break;
   }
 }
+function isMySeat(s){if(!S||!S.players[s])return false;if(me.role==='client')return s===me.seat;if(me.role==='host')return S.players[s].ctrl==='host';if(me.role==='local')return S.players[s].ctrl==='local';return false}
+function ab(pc,h){const [r,c]=coordOf(pc);fx('ab',{h,r,c,col:SEATS[pc.owner].color})}
+function callout(d){const f=ABFX[d.h];if(!f)return;const el=document.createElement('div');el.className='callout';el.style.cssText=`left:${Math.max(14,Math.min(86,d.c/15*100))}%;top:${Math.max(8,d.r/15*100)}%;--c:${d.col||'#fff'}`;el.innerHTML=(HEROES[d.h]?`<img src="${ICONS[d.h]}" alt="">`:'<b>🐍</b>')+f.t;$('#board').appendChild(el);setTimeout(()=>el.remove(),1750);burst(d.r,d.c,f.col,36,{sp:.14});sfx(f.s)}
 function onTurnFx(seat){
   const mine=(me.role==='client'&&seat===me.seat)||(me.role==='host'&&S.players[seat].ctrl==='host')||(me.role==='local'&&S.players[seat].ctrl==='local');
-  if(mine){sfx('turn');banner(me.role==='local'?`Ход: ${pnm(seat)}`:'Твой ход!',SEATS[seat].color);tip('turn')}
+  if(mine){sfx('turn');vib(80);banner(me.role==='local'?`Ход: ${pnm(seat)}`:'Твой ход!',SEATS[seat].color);tip('turn')}
 }
 
 /* ===================== engine ===================== */
@@ -813,7 +911,7 @@ function options(o,roll){
       const steps=roll+((S.season==='air'&&heroEl(pc)==='air'&&pc.p<=50)?1:0);
       res.push({id:pc.id,kind:'fwd',steps:Math.min(steps,56-pc.p),label:pc.p+steps>=56?'Зайти домой':`Вперёд на ${steps}`});
       if(pc.p<=50){
-        if(GATES.includes(absOf(pc))&&pc.p+26<=50&&(roll<=2||(h==='aquarius'&&abil())))res.push({id:pc.id,kind:'cut',label:'Нырнуть в Колесо'});
+        if(GATES.includes(absOf(pc))&&pc.p+26<=50&&(roll<=3||(h==='aquarius'&&abil())))res.push({id:pc.id,kind:'cut',label:'Нырнуть в Колесо'});
         if(h==='cancer'&&abil()&&ready(pc)&&pc.p-roll>=0)res.push({id:pc.id,kind:'back',steps:roll,label:`Назад на ${roll}`});
       }
     } else if(pc.state==='hub')res.push({id:pc.id,kind:'hubexit',dest:Math.min(55,pc.hubExit+roll-1),label:'Выйти из Колеса'});
@@ -826,7 +924,7 @@ function swapTargets(src){if(!onTrack(src))return[];const a=absOf(src),range=S.a
 function threats(o,a){return S.pieces.filter(e=>e.owner!==o&&onTrack(e)&&((a-absOf(e)+52)%52)>=1&&((a-absOf(e)+52)%52)<=6).length}
 function pushBack(pc,n,quiet){
   if(!onTrack(pc))return false;
-  if(pc.hero==='capricorn'&&abil()){if(!quiet)log(`${tag(pc)} упирается и не сдвигается с места.`);return false}
+  if(pc.hero==='capricorn'&&abil()){log(`${tag(pc)} упирается и не сдвигается с места.`);ab(pc,'capricorn');return false}
   pc.p=Math.max(0,pc.p-n);return true;
 }
 function back1(pc,isAtt){if(pc.state==='hub'){if(isAtt&&pc.hubFrom!=null){pc.state='track';pc.p=pc.hubFrom}return}pushBack(pc,1,true)}
@@ -836,7 +934,7 @@ function capture(pc,by){
   const toPrison=!!pc.hero&&!earthSafe&&prisoners(by).length<2;
   if(toPrison){pc.state='prison';pc.prisonOf=by;pc.served=0;log(`${tag(pc)} попадает в тюрьму. Тюремщик: ${stag(by)}.`)}
   else{pc.state='base';pc.p=0;log(`${tag(pc)} улетает на базу.`)}
-  fx('capture',{r,c,col:SEATS[pc.owner].color,prison:toPrison});
+  fx('capture',{r,c,col:SEATS[pc.owner].color,prison:toPrison,seat:pc.owner});
 }
 function bonuses(pc,role,o={}){
   const b=[];
@@ -853,21 +951,22 @@ const sum=b=>b.reduce((s,x)=>s+x[1],0);
 async function duel(att,def,o={}){
   const ranged=!!o.ranged;
   if(def.hero==='gemini'&&abil()&&def.charge>0){
-    def.charge=0;if(S.awakened)def.cd=3;
+    def.charge=0;if(S.awakened)def.cd=3;ab(def,'gemini');
     if(onTrack(def)&&def.p+2<=50)def.p+=2;
     log(`${tag(att)} атакует, но попадает в приманку. ${tag(def)} ускользают.`);
     fx('decoy',{a:att.id,d:def.id});await sleep(1500);render();return 'decoy';
   }
-  const ar=rnd(6),dr=rnd(6),ab=bonuses(att,'att',o),db=bonuses(def,'def');
-  const at=ar+sum(ab),dt=dr+sum(db),res=at>dt?'att':dt>at?'def':'tie';
-  fx('duel',{a:att.id,d:def.id,ar,dr,ab,db,at,dt,res,ranged});await sleep(2100);
+  const ar=rnd(6),dr=rnd(6),abA=bonuses(att,'att',o),db=bonuses(def,'def');
+  const at=ar+sum(abA),dt=dr+sum(db),res=at>dt?'att':dt>at?'def':'tie';
+  for(const x of [att,def])if(x.hero==='leo'&&abil())ab(x,'leo');
+  fx('duel',{a:att.id,d:def.id,ar,dr,ab:abA,db,at,dt,res,ranged});await sleep(2100);
   if(res==='tie'){if(!ranged){back1(att,true);back1(def,false);log(`Ничья: ${tag(att)} и ${tag(def)} отскакивают назад.`)}else log(`${tag(att)} промахивается: ничья.`);render();return 'tie'}
   if(ranged&&res==='def'){log(`${tag(att)} промахивается, ${tag(def)} выстоял.`);render();return 'def'}
   const W=res==='att'?att:def,Lo=res==='att'?def:att;
   log(`${tag(W)} побеждает ${tag(Lo)} в дуэли (${Math.max(at,dt)}:${Math.min(at,dt)}).`);
-  if(Lo.hero==='scorpio'&&abil()){const n=S.awakened?2:1;W.freeze+=n;const [r,c]=coordOf(W);fx('poison',{r,c});log(`Яд Скорпиона: ${tag(W)} пропустит ${hod(n)}.`)}
-  if(Lo.hero==='libra'&&abil()&&onTrack(W)){const n=S.awakened?6:3;if(pushBack(W,n))log(`Равновесие Весов: ${tag(W)} откатывается на ${n}.`)}
-  if(Lo.hero==='taurus'&&abil()&&Lo.charge>0){Lo.charge=0;if(S.awakened)Lo.cd=3;back1(Lo,Lo===att);Lo.freeze=Math.max(Lo.freeze,1);log(`Броня спасает ${tag(Lo)}: он отходит и стоит ход.`)}
+  if(Lo.hero==='scorpio'&&abil()){const n=S.awakened?2:1;W.freeze+=n;ab(Lo,'scorpio');log(`Яд Скорпиона: ${tag(W)} пропустит ${hod(n)}.`)}
+  if(Lo.hero==='libra'&&abil()&&onTrack(W)){const n=S.awakened?6:3;ab(Lo,'libra');if(pushBack(W,n))log(`Равновесие Весов: ${tag(W)} откатывается на ${n}.`)}
+  if(Lo.hero==='taurus'&&abil()&&Lo.charge>0){Lo.charge=0;if(S.awakened)Lo.cd=3;ab(Lo,'taurus');back1(Lo,Lo===att);Lo.freeze=Math.max(Lo.freeze,1);log(`Броня спасает ${tag(Lo)}: он отходит и стоит ход.`)}
   else capture(Lo,W.owner);
   if(W.hero==='leo'&&abil()&&S.awakened&&W.owner===S.cur){S.bonusRoll=true;log(`${tag(W)} рычит: ещё один бросок!`)}
   render();return res;
@@ -885,18 +984,24 @@ async function stepMove(pc,steps,dir){
     freeAt(pc);
     if(i<steps&&dir>0&&pc.hero==='aries'&&abil()&&onTrack(pc)&&!SAFE.has(absOf(pc))){
       const a=absOf(pc),n=S.awakened?4:2;
-      for(const e of S.pieces)if(e.owner!==pc.owner&&onTrack(e)&&absOf(e)===a){if(pushBack(e,n)){const [r,c]=coordOf(pc);fx('ram',{r,c});log(`Таран Овна отбрасывает ${tag(e)} на ${n}.`);render();await sleep(220)}}
+      for(const e of S.pieces)if(e.owner!==pc.owner&&onTrack(e)&&absOf(e)===a){if(pushBack(e,n)){ab(pc,'aries');log(`Таран Овна отбрасывает ${tag(e)} на ${n}.`);render();await sleep(220)}}
     }
     if(pc.state==='done')break;
+  }
+  if(dir>0&&pc.hero==='aries'&&abil()&&onTrack(pc)){
+    const a=(absOf(pc)+1)%52,n=S.awakened?4:2;
+    if(!SAFE.has(a))for(const e of S.pieces)if(e.owner!==pc.owner&&onTrack(e)&&absOf(e)===a){if(pushBack(e,n)){ab(pc,'aries');log(`Таран Овна сносит ${tag(e)} на ${n} назад.`);render();await sleep(260)}}
   }
 }
 async function land(pc,o={}){
   if(pc.state==='done'){log(`${tag(pc)} дома!`);const [r,c]=coordOf(pc);fx('home',{r,c,col:SEATS[pc.owner].color});return}
   if(!onTrack(pc))return;const a=absOf(pc);
   if(!SAFE.has(a)){const foes=S.pieces.filter(e=>e.owner!==pc.owner&&onTrack(e)&&absOf(e)===a).sort((x,y)=>y.p-x.p);if(foes.length)await duel(pc,foes[0],o)}
+  if(onTrack(pc)&&S.boss&&S.boss.state!=='off'&&S.boss.a===absOf(pc))await bossDuel(pc,o);
 }
 async function cut(pc){
   const instant=pc.hero==='aquarius'&&abil()&&S.awakened;
+  if(pc.hero==='aquarius'&&abil()&&(S.roll>3||instant))ab(pc,'aquarius');
   pc.hubFrom=pc.p;pc.hubExit=pc.p+26;pc.state='hub';render();await sleep(380);
   log(`${tag(pc)} ныряет в Колесо Зодиака.`);
   const foes=S.pieces.filter(e=>e.owner!==pc.owner&&e.state==='hub');
@@ -921,14 +1026,78 @@ async function startTurn(fresh){
     }
   }
   S.phase='preroll';S.roll=null;S.opts=null;S.busy=false;
+  S.tTotal=(S.timer||0)*1000;S.tEnd=(p.kind==='human'&&S.timer)?Date.now()+S.tTotal:null;
   render();fx('turn',{seat:S.cur});scheduleAuto();
 }
 function scheduleAuto(){
   const p=pl(S.cur),tid=S.turnId;
   if(p.kind==='bot'){botTurn(tid);return}
-  if(me.role==='host'&&p.kind==='human'&&p.ctrl!=='host'&&!p.online){
+  if(me.role==='host'&&p.kind==='human'&&p.ctrl!=='host'&&!p.online&&!S.timer){
     later(()=>{if(S&&S.turnId===tid&&!pl(S.cur).online&&pl(S.cur).kind==='human'&&!S.busy&&(S.phase==='preroll'||S.phase==='rolled')){log(`${stag(S.cur)} не в сети, за него ходит автопилот 🤖`);botTurn(tid)}},12000);
   }
+}
+function timerTick(){
+  if(!S||UI.screen!=='game')return;
+  const end=me.role==='client'?UI.tEnd:S.tEnd,tot=S.tTotal||1;
+  const show=!!end&&(S.phase==='preroll'||S.phase==='rolled')&&!S.botRun&&pl(S.cur).kind==='human';
+  const tr=$('#trow');tr.hidden=!show;
+  if(show){const left=Math.max(0,end-Date.now()),sec=Math.ceil(left/1000),t=$('#timer');t.style.setProperty('--c',SEATS[S.cur].color);t.querySelector('i').style.width=Math.min(100,left/tot*100)+'%';t.classList.toggle('low',sec<=5);$('#tnum').textContent=sec+' с';
+    if(sec<=5&&sec>0&&sec!==UI.lastSec&&canAct()){sfx('tick');vib(15)}UI.lastSec=sec}
+  if(isAuth()&&S.tEnd&&Date.now()>S.tEnd&&(S.phase==='preroll'||S.phase==='rolled')&&!S.busy&&!S.botRun&&pl(S.cur).kind==='human'){
+    S.tEnd=null;UI.sel=null;UI.target=null;log(`⏰ Время ${stag(S.cur)} вышло, ходит автопилот.`);fx('toast',{title:'⏰ Время вышло',text:`За ${pnm(S.cur)} ходит автопилот.`});botTurn(S.turnId);
+  }
+}
+setInterval(timerTick,250);
+async function bossRound(){
+  const B=S.boss;if(!B)return;
+  if(B.state==='off'){
+    if(S.round<B.next)return;
+    B.state='hunt';B.left=BOSS.hunt;B.a=pick(GATES);B.frozen=0;
+    const [r,c]=PATH[B.a];log('🐍 Змееносец выползает на поле и начинает охоту!');render();fx('boss',{r:r+.5,c:c+.5});await sleep(2000);
+  }
+  if(B.frozen>0){B.frozen--;log('🐍 Змееносец отравлен и пропускает охоту.');render();return}
+  B.left--;
+  if(B.state==='hunt'){
+    await bossMove();
+    if(S.boss===B&&B.left<=0){B.state='rest';B.left=BOSS.rest;log('🐍 Змееносец насытился и уснул 💤 Самое время напасть!');fx('toast',{title:'🐍 Змееносец спит',text:'Встань на его клетку и сразись: спящий змей слабее.'})}
+  } else if(B.state==='rest'&&B.left<=0){B.cycles=(B.cycles||0)+1;if(B.cycles>=2){S.boss={state:'off',next:S.round+BOSS.respawn,a:null,left:0,frozen:0};log(`🐍 Змееносец уполз в Колесо. Вернётся через ${BOSS.respawn} кругов.`);fx('toast',{title:'🐍 Змееносец ушёл',text:`Вернётся через ${BOSS.respawn} кругов.`})}else{B.state='hunt';B.left=BOSS.hunt;log('🐍 Змееносец проснулся и снова охотится!');fx('bossWake')}}
+  render();
+}
+async function bossMove(){
+  const B=S.boss,steps=rnd(6)+2;let eaten=0;
+  log(`🐍 Змееносец ползёт на ${steps}.`);
+  for(let i=0;i<steps;i++){
+    B.a=(B.a+1)%52;fx('hiss');render();await sleep(170);
+    if(SAFE.has(B.a))continue;
+    for(const v of S.pieces.filter(e=>onTrack(e)&&absOf(e)===B.a)){
+      if(eaten>=1)break;
+      if(v.hero==='gemini'&&abil()&&v.charge>0){v.charge=0;if(S.awakened)v.cd=3;ab(v,'gemini');if(v.p+2<=50)v.p+=2;log(`Змееносец кусает приманку, ${tag(v)} ускользают.`);render();await sleep(400);continue}
+      if(v.hero==='taurus'&&abil()&&v.charge>0){v.charge=0;if(S.awakened)v.cd=3;v.freeze=Math.max(v.freeze,1);ab(v,'taurus');log(`Броня ${tag(v)} выдерживает укус.`);render();await sleep(400);continue}
+      const [r,c]=coordOf(v);v.state='base';v.p=0;v.freeze=0;eaten++;
+      log(`🐍 Змееносец проглатывает ${tag(v)}!`);fx('capture',{r,c,col:SEATS[v.owner].color,prison:false,seat:v.owner});
+      if(v.hero==='scorpio'&&abil()){B.frozen=S.awakened?2:1;ab(v,'scorpio');log('Яд Скорпиона! Змееносец пропустит охоту.')}
+      render();await sleep(450);
+    }
+    if(eaten>=1){log('🐍 Змееносец сыт и останавливается.');break}
+  }
+}
+async function bossDuel(pc,o){
+  const B=S.boss,ar=rnd(6),br=rnd(6),abA=bonuses(pc,'att',o);
+  if(B.state==='rest')abA.push(['спящий змей',2]);
+  const bb=B.state==='hunt'?[['ярость',2]]:[];
+  const at=ar+sum(abA),bt=br+sum(bb),res=at>bt?'att':bt>at?'def':'tie';
+  log(`⚔️ ${tag(pc)} нападает на Змееносца!`);
+  fx('bossDuel',{a:pc.id,ar,ab:abA,at,br,bb,bt,res});await sleep(2200);
+  const [r,c]=coordOf(pc);
+  if(res==='tie'){pushBack(pc,1,true);log('Ничья со Змееносцем: фишка отскакивает.');render();return}
+  if(res==='att'){
+    S.boss={state:'off',next:S.round+BOSS.respawn,a:null,left:0,frozen:0};
+    if(onTrack(pc))pc.p=Math.min(55,pc.p+5);
+    piecesOf(pc.owner).forEach(e=>{if(e.hero){e.cd=0;if(CHARGE.has(e.hero))e.charge=1}});
+    log(`🏆 ${tag(pc)} побеждает Змееносца! Награда: +5 клеток и все способности готовы. Змей вернётся через ${BOSS.respawn} кругов.`);
+    fx('bossDown',{r,c});render();return;
+  }
+  pc.state='base';pc.p=0;pc.freeze=0;log(`🐍 Змееносец проглатывает ${tag(pc)}.`);fx('capture',{r,c,col:SEATS[pc.owner].color,prison:false,seat:pc.owner});render();
 }
 function onNewRound(){
   const ns=EL_ORDER[Math.floor((S.round-1)/3)%4];
@@ -946,19 +1115,23 @@ function endTurn(){
   if(again){log(`${stag(S.cur)} бросает ещё раз.`);render();later(()=>startTurn(false),260);return}
   piecesOf(S.cur).forEach(p=>{if(S.frozenAtStart.includes(p.id)&&p.freeze>0)p.freeze--});
   let n=S.cur;do{n=(n+1)%4}while(!pl(n).active);
-  if(n<=S.cur){S.round++;onNewRound()}
-  S.cur=n;S.phase='busy';render();later(()=>startTurn(true),320);
+  const newRound=n<=S.cur;
+  if(newRound){S.round++;onNewRound()}
+  S.cur=n;S.phase='busy';S.tEnd=null;render();
+  if(newRound&&S.boss&&(S.boss.state!=='off'||S.round>=S.boss.next))later(async()=>{await bossRound();startTurn(true)},400);
+  else later(()=>startTurn(true),320);
 }
 async function doRoll(){
   if(S.busy||S.phase!=='preroll')return;
   S.busy=true;render();const r=rnd(6);fx('dice',{v:r});await sleep(560);
   S.roll=r;if(r===6)S.sixes++;S.opts=options(S.cur,r);S.phase='rolled';S.busy=false;
+  if(S.tEnd)S.tEnd=Math.max(S.tEnd,Date.now()+8000);
   log(`${stag(S.cur)} бросает ${r}.`);render();
   if(pl(S.cur).kind!=='bot'&&!S.botRun&&!S.opts.length&&!virgoAvail(S.cur)){S.busy=true;render();await sleep(1100);S.busy=false;passTurn()}
 }
 async function doReroll(){
   if(S.phase!=='rolled')return;
-  const v=piecesOf(S.cur).find(p=>p.hero==='virgo');v.charge=0;if(S.awakened)v.cd=4;
+  const v=piecesOf(S.cur).find(p=>p.hero==='virgo');v.charge=0;if(S.awakened)v.cd=4;ab(v,'virgo');
   S.busy=true;render();const r=rnd(6);fx('dice',{v:r});await sleep(560);
   S.roll=r;if(r===6)S.sixes++;log(`Расчёт Девы: ${stag(S.cur)} перебрасывает, выпало ${r}.`);
   S.opts=options(S.cur,r);S.busy=false;render();
@@ -970,13 +1143,13 @@ async function doOption(opt){
   const pc=P(opt.id);
   if(opt.kind==='exit'){pc.state='track';pc.p=0;log(`${tag(pc)} выходит на старт.`);render();await sleep(260)}
   else if(opt.kind==='fwd'){await stepMove(pc,opt.steps,1);await land(pc,{steps:opt.steps})}
-  else if(opt.kind==='back'){pc.cd=S.awakened?0:2;log(`${tag(pc)} пятится назад.`);await stepMove(pc,opt.steps,-1);await land(pc,{back:true})}
+  else if(opt.kind==='back'){pc.cd=S.awakened?0:2;ab(pc,'cancer');log(`${tag(pc)} пятится назад.`);await stepMove(pc,opt.steps,-1);await land(pc,{back:true})}
   else if(opt.kind==='cut')await cut(pc);
   else if(opt.kind==='hubexit'){pc.state='track';pc.p=opt.dest;log(`${tag(pc)} выходит из Колеса у дальних врат.`);render();await sleep(320);freeAt(pc);await land(pc)}
   S.busy=false;S.opts=null;endTurn();
 }
 async function doShoot(src,tgt){
-  S.busy=true;S.phase='busy';render();src.cd=S.awakened?2:3;
+  S.busy=true;S.phase='busy';render();src.cd=S.awakened?2:3;ab(src,'sagittarius');
   log(`${tag(src)} стреляет в ${tag(tgt)}!`);fx('shoot',{a:coordOf(src),b:coordOf(tgt)});await sleep(500);
   await duel(src,tgt,{ranged:true});S.busy=false;S.roll=null;endTurn();
 }
@@ -984,7 +1157,7 @@ async function doSwap(src,e){
   S.busy=true;S.phase='busy';render();src.cd=S.awakened?3:4;
   const a=absOf(src),b=absOf(e),ca=coordOf(src),cb=coordOf(e);
   src.p=progOf(src.owner,b);e.p=progOf(e.owner,a);
-  log(`Течение: ${tag(src)} меняются местами с ${tag(e)}.`);fx('swap',{a:ca,b:cb});render();await sleep(500);
+  log(`Течение: ${tag(src)} меняются местами с ${tag(e)}.`);fx('swap',{a:ca,b:cb});ab(src,'pisces');render();await sleep(500);
   S.busy=false;S.roll=null;endTurn();
 }
 async function handleIntent(ctrl,a){
@@ -1004,16 +1177,19 @@ async function handleIntent(ctrl,a){
 }
 /* bots */
 function swapGain(src,e){const ns=progOf(src.owner,absOf(e)),ne=progOf(e.owner,absOf(src));return (ns-src.p)+(e.owner!==src.owner?(e.p-ne):(ne-e.p))}
+function bossDanger(a){const B=S.boss;if(!B||B.state!=='hunt'||SAFE.has(a))return 0;const d=(a-B.a+52)%52;return d>=1&&d<=8?1:0}
 function scoreOpt(op){
-  const pc=P(op.id);
+  const pc=P(op.id),hard=S.botLvl==='hard';
   if(op.kind==='exit')return 30;
   if(op.kind==='cut')return 28-(S.pieces.some(e=>e.owner!==pc.owner&&e.state==='hub')?12:0);
   const dest=op.kind==='fwd'?pc.p+op.steps:op.kind==='back'?pc.p-op.steps:op.dest,from=op.kind==='hubexit'?pc.hubFrom:pc.p;
   if(dest>=56)return 60;let s=dest-from;
   if(dest>50){s+=18;if(from<=50)s+=10;return s}
   const a=(START[pc.owner]+dest)%52;
-  if(!SAFE.has(a)){const foe=S.pieces.find(e=>e.owner!==pc.owner&&onTrack(e)&&absOf(e)===a);if(foe)s+=30+foe.p*.4;s-=8*threats(pc.owner,a)}else s+=6;
-  if(onTrack(pc)&&!SAFE.has(absOf(pc)))s+=4*threats(pc.owner,absOf(pc));
+  if(!SAFE.has(a)){const foe=S.pieces.find(e=>e.owner!==pc.owner&&onTrack(e)&&absOf(e)===a);if(foe)s+=30+foe.p*.4;s-=(hard?13:8)*threats(pc.owner,a)}else s+=6;
+  if(onTrack(pc)&&!SAFE.has(absOf(pc)))s+=(hard?6:4)*threats(pc.owner,absOf(pc));
+  s-=(hard?18:9)*bossDanger(a);if(hard&&onTrack(pc))s+=10*bossDanger(absOf(pc));
+  const B=S.boss;if(B&&B.state!=='off'&&B.a===a)s+=B.state==='rest'?(hard?26:12):(hard?-25:-8);
   return s;
 }
 async function botTurn(tid){
@@ -1022,17 +1198,19 @@ async function botTurn(tid){
     await sleep(750);
     if(!S||S.turnId!==tid||S.phase==='over')return;
     const o=S.cur;
+    const lv=S.botLvl||'normal';
     if(S.phase==='preroll'){
-      for(const pc of piecesOf(o)){
+      if(lv!=='easy')for(const pc of piecesOf(o)){
         if(pc.hero==='sagittarius'&&abil()&&ready(pc)){const t=shootTargets(pc).sort((x,y)=>y.p-x.p);if(t.length&&Math.random()<.8){await doShoot(pc,t[0]);return}}
         if(pc.hero==='pisces'&&abil()&&ready(pc)){let best=null,bg=9;for(const e of swapTargets(pc)){const g=swapGain(pc,e);if(g>bg){bg=g;best=e}}if(best){await doSwap(pc,best);return}}
       }
       await doRoll();
     }
     if(S.phase!=='rolled')return;
-    if(virgoAvail(o)&&(!S.opts.length||(S.roll<=2&&Math.random()<.5))){await sleep(350);await doReroll()}
+    if(lv!=='easy'&&virgoAvail(o)&&(!S.opts.length||(lv==='hard'?Math.max(...S.opts.map(scoreOpt))<6:(S.roll<=2&&Math.random()<.5)))){await sleep(350);await doReroll()}
     if(!S.opts.length){await sleep(500);passTurn();return}
-    let best=S.opts[0],bs=-1e9;for(const op of S.opts){const s=scoreOpt(op)+Math.random()*3;if(s>bs){bs=s;best=op}}
+    let best=S.opts[0],bs=-1e9;const noise=lv==='easy'?25:lv==='hard'?.5:3;for(const op of S.opts){const s=scoreOpt(op)+Math.random()*noise;if(s>bs){bs=s;best=op}}
+    if(lv==='easy'&&Math.random()<.4)best=pick(S.opts);
     await sleep(380);await doOption(best);
   } finally {if(S)S.botRun=false}
 }
@@ -1051,12 +1229,12 @@ function distribute(players){
 function spinDelays(n,idx){const total=n*3+idx,d=[];for(let k=0;k<=total;k++)d.push(70+Math.round(430*Math.pow(k/total,3)));return d}
 async function launchGame(){
   GEN++;UI.gid=null;
-  const players=L.seats.map((s,i)=>({id:i,kind:s.kind,active:s.kind!=='none',ctrl:s.kind==='human'?(L.mode==='local'?'local':s.ctrl):s.kind==='bot'?'bot':null,name:s.kind==='bot'?(s.name&&s.name.includes('🤖')?s.name:BOTNAMES[i]):(s.name||SEATS[i].name),online:s.kind==='human'?(L.mode==='local'||s.ctrl==='host'||!!s.online):true,host:s.ctrl==='host',pref:s.pref||null,heroes:[]}));
+  const players=L.seats.map((s,i)=>({id:i,kind:s.kind,active:s.kind!=='none',ctrl:s.kind==='human'?(L.mode==='local'?'local':s.ctrl):s.kind==='bot'?'bot':null,name:s.kind==='bot'?(s.name&&s.name.includes('🤖')?s.name:BOTNAMES[i]):(s.name||SEATS[i].name),online:s.kind==='human'?(L.mode==='local'||s.ctrl==='host'||!!s.online):true,host:s.ctrl==='host',pref:s.pref||null,dice:s.dice||(L.mode==='local'?L.dice:null)||'classic',heroes:[]}));
   distribute(players);
   const pieces=[];
   for(const p of players){if(!p.active)continue;[...p.heroes,null].forEach((h,slot)=>pieces.push({id:pieces.length,owner:p.id,hero:h,state:'track',p:0,slot,cd:0,charge:CHARGE.has(h)?1:0,freeze:0,served:0,prisonOf:null,hubExit:null,hubFrom:null}))}
   const order=players.filter(p=>p.active).map(p=>p.id),winner=pick(order);
-  S={gid:uid(6),players,pieces,cur:order[0],round:1,season:'fire',phase:'intro',goal:L.goal,log:[],awakened:false,eclipse:null,bonusRoll:false,turnId:0,frozenAtStart:[],sixes:0,roll:null,opts:null,busy:true,botRun:false,winner:null};
+  S={gid:uid(6),players,pieces,cur:order[0],round:1,season:'fire',phase:'intro',goal:L.goal,timer:L.timer||0,tEnd:null,tTotal:0,botLvl:L.bots||'normal',skin:L.skin||'wood',boss:{state:'off',next:BOSS.first,a:null,left:0,frozen:0},log:[],awakened:false,eclipse:null,bonusRoll:false,turnId:0,frozenAtStart:[],sixes:0,roll:null,opts:null,busy:true,botRun:false,winner:null};
   L.started=true;sendLobby();
   log('Партия началась. Все фишки на старте. Наступает Сезон Огня.');
   showScreen('game');render();
@@ -1085,6 +1263,7 @@ function buildBoard(){
   HOMECOL.forEach((col,s)=>col.forEach(([r,c])=>put('cell home',r,c,1,1,'',`--c:${SEATS[s].color}`)));
   put('center',6,6,3,3);put('hub',6.9,6.9,1.2,1.2,'✺');
   if(!S)return;
+  const bel=document.createElement('div');bel.className='boss';bel.textContent='🐍';bel.style.display='none';UI.bossEl=bel;b.appendChild(bel);
   for(const pc of S.pieces){
     const el=document.createElement('button');el.className='pc'+(pc.hero?'':' plain');el.style.setProperty('--c',SEATS[pc.owner].color);
     el.innerHTML=pc.hero?`<img src="${ICONS[pc.hero]}" alt="">`:'<span>★</span>';
@@ -1094,12 +1273,36 @@ function buildBoard(){
   }
   UI.gid=S.gid;fxSize();
 }
+function destInfo(o){
+  const pc=P(o.id);let p=pc.p;
+  if(o.kind==='cut')return{rc:[7.5,7.5],mark:'✺',danger:S.pieces.some(e=>e.owner!==pc.owner&&e.state==='hub')};
+  if(o.kind==='exit')p=0;else if(o.kind==='fwd')p=pc.p+o.steps;else if(o.kind==='back')p=pc.p-o.steps;else if(o.kind==='hubexit')p=o.dest;
+  if(p>=56)return{rc:DONE[pc.owner],mark:'🏠'};
+  const rc=coordOf({...pc,state:'track',p});
+  if(p>50)return{rc,mark:'🏠'};
+  const a=(START[pc.owner]+p)%52,boss=!!(S.boss&&S.boss.state!=='off'&&S.boss.a===a);
+  const foe=!SAFE.has(a)&&S.pieces.some(e=>e.owner!==pc.owner&&onTrack(e)&&absOf(e)===a);
+  const thr=!SAFE.has(a)&&(threats(pc.owner,a)>0||bossDanger(a)>0);
+  return{rc,mark:boss?'🐍':foe?'⚔️':SAFE.has(a)?'🛡️':thr?'⚠️':'•',danger:boss||foe||thr};
+}
+function renderGhosts(){
+  document.querySelectorAll('#board .ghost').forEach(g=>g.remove());
+  if(UI.sel==null||S.phase!=='rolled'||!canAct()||!S.opts)return;
+  S.opts.forEach((o,i)=>{if(o.id!==UI.sel)return;const d=destInfo(o);const g=document.createElement('button');g.className='ghost'+(d.danger?' danger':'');
+    g.style.cssText=`left:${d.rc[1]/15*100}%;top:${d.rc[0]/15*100}%;--c:${SEATS[S.cur].color}`;g.textContent=d.mark;g.setAttribute('aria-label',o.label);g.onclick=()=>act({k:'opt',i});$('#board').appendChild(g)});
+}
+function renderBoss(){
+  const el=UI.bossEl;if(!el)return;const B=S.boss;
+  if(!B||B.state==='off'||B.a==null){el.style.display='none';return}
+  const [r,c]=PATH[B.a];el.style.display='grid';el.style.left=((c+.5)/15*100)+'%';el.style.top=((r+.5)/15*100)+'%';el.className='boss '+B.state;
+}
 function renderPieces(){
   if(!S)return;
   const groups={},rc={};
   for(const pc of S.pieces){const c=coordOf(pc);rc[pc.id]=c;const k=c[0].toFixed(2)+','+c[1].toFixed(2);(groups[k]=groups[k]||[]).push(pc)}
   const tg=UI.target?UI.target.targets:[];
   const movers=new Set(S.phase==='rolled'&&canAct()&&S.opts?S.opts.map(o=>o.id):[]);
+  renderGhosts();renderBoss();
   for(const k in groups){const g=groups[k],n=g.length;
     g.forEach((pc,i)=>{let [r,c]=rc[pc.id],sc=pc.state==='done'?.5:1;
       if(n>1){const cols=Math.ceil(Math.sqrt(n)),rows=Math.ceil(n/cols),sp=pc.state==='done'?.26:.3;c+=((i%cols)-(cols-1)/2)*sp;r+=(Math.floor(i/cols)-(rows-1)/2)*sp;sc=Math.min(sc,n<=4?.62:.48)}
@@ -1107,7 +1310,7 @@ function renderPieces(){
       el.style.left=(c/15*100)+'%';el.style.top=(r/15*100)+'%';el.style.setProperty('--sc',sc);
       if(UI.prev[pc.id]&&UI.prev[pc.id]!==k&&pc.state==='track'&&!REDUCED){el.classList.remove('hop');void el.offsetWidth;el.classList.add('hop');setTimeout(()=>el.classList.remove('hop'),200)}
       UI.prev[pc.id]=k;
-      el.classList.toggle('can',movers.has(pc.id));el.classList.toggle('tgt',tg.includes(pc.id));
+      el.classList.toggle('can',movers.has(pc.id)&&UI.sel!==pc.id);el.classList.toggle('sel',UI.sel===pc.id);el.classList.toggle('tgt',tg.includes(pc.id));
       el.classList.toggle('jailed',pc.state==='prison');el.classList.toggle('frozen',pc.freeze>0&&pc.state!=='base'&&pc.state!=='prison');
     })}
 }
@@ -1120,8 +1323,8 @@ function canAct(){
   if(me.role==='host')return p.ctrl==='host';
   return S.cur===me.seat;
 }
-function act(a){UI.choose=null;UI.target=null;if(me.role==='client')send(NET.hostConn,{t:'intent',a});else handleIntent(me.role==='host'?'host':'local',a);renderGameMaybe()}
-function setDie(v){const d=$('#die');if(!v){d.className='die empty';d.innerHTML='?';return}d.className='die';d.innerHTML=Array.from({length:9},(_,i)=>`<i class="${PIPS[v].includes(i)?'on':''}"></i>`).join('')}
+function act(a){UI.sel=null;UI.target=null;if(me.role==='client')send(NET.hostConn,{t:'intent',a});else handleIntent(me.role==='host'?'host':'local',a);renderGameMaybe()}
+function setDie(v){const d=$('#die'),sk=' d-'+((S&&S.players[S.cur]&&S.players[S.cur].dice)||'classic');if(!v){d.className='die empty'+sk;d.innerHTML='?';return}d.className='die'+sk;d.innerHTML=Array.from({length:9},(_,i)=>`<i class="${PIPS[v].includes(i)?'on':''}"></i>`).join('')}
 async function diceAnim(v){UI.diceAnim=Date.now()+520;const d=$('#die');for(let i=0;i<7;i++){setDie(rnd(6));await new Promise(r=>setTimeout(r,55))}setDie(v);d.classList.remove('roll');void d.offsetWidth;d.classList.add('roll')}
 function statusOf(pc){
   if(pc.state==='done')return 'Дома 🏠';
@@ -1146,7 +1349,10 @@ function renderGame(){
   if(!S||UI.screen!=='game')return;
   if(UI.gid!==S.gid)buildBoard();
   if(UI.target&&S.phase!=='preroll')UI.target=null;
-  if(UI.choose&&S.phase!=='rolled')UI.choose=null;
+  if(UI.sel!=null&&(S.phase!=='rolled'||!canAct()))UI.sel=null;
+  const bd=$('#board');['wood','yurt','night','pixel'].forEach(k=>bd.classList.toggle('s-'+k,(S.skin||'wood')===k));
+  document.body.className='g-'+(S.skin||'wood');
+  const B=S.boss;$('#chipBoss').textContent=!B?'':B.state==='off'?(S.round<B.next?`🐍 Змееносец через ${B.next-S.round} кр.`:'🐍 Змееносец рядом…'):B.state==='hunt'?(B.left>0?`🐍 Охотится: ещё ${B.left} кр.`:'🐍 Последний рывок охоты'):`🐍 Спит 💤 ещё ${Math.max(1,B.left)} кр.`;
   $('#chipRound').textContent=`Круг ${S.round}`;
   $('#chipSeason').textContent=`${EL[S.season].icon} ${EL[S.season].season}`;
   const aw=$('#chipAwake');aw.textContent=S.awakened?'✨ Звёзды пробудились':'Пробуждение на 11-м круге';aw.classList.toggle('awake',!!S.awakened);
@@ -1180,7 +1386,8 @@ function renderGame(){
         const cap=S.opts.some(o=>{const pc=P(o.id);if(o.kind!=='fwd'||pc.p+o.steps>50)return false;const a=(START[pc.owner]+pc.p+o.steps)%52;return !SAFE.has(a)&&S.pieces.some(e=>e.owner!==pc.owner&&onTrack(e)&&absOf(e)===a)});
         hint=cap?HINT.capture:HINT.pick;
         if(S.opts.some(o=>o.kind==='cut'))tip('gate');
-        if(UI.choose!=null){const pc=P(UI.choose);hint=`Как ходить: ${pname(pc)}?`;add('Отмена',()=>{UI.choose=null;renderGame()},true)}
+        tip('preview');
+        if(UI.sel!=null){const pc=P(UI.sel);hint=`${pname(pc)}: нажми на кружок или на кнопку, чтобы сходить.`;add('Отмена',()=>{UI.sel=null;renderGame()},true)}
       }
     }
   } else {
@@ -1190,7 +1397,7 @@ function renderGame(){
   }
   $('#hint').textContent=hint;
   const ch=$('#choices');ch.innerHTML='';
-  if(UI.choose!=null&&S.opts){S.opts.forEach((o,i)=>{if(o.id!==UI.choose)return;const b=document.createElement('button');b.className='btn';b.textContent=o.label;b.onclick=()=>act({k:'opt',i});ch.appendChild(b)})}
+  if(UI.sel!=null&&S.opts&&canAct()){S.opts.forEach((o,i)=>{if(o.id!==UI.sel)return;const d=destInfo(o);const b=document.createElement('button');b.className='btn';b.textContent=`${o.label} ${d.mark!=='•'?d.mark:''}`.trim();b.onclick=()=>act({k:'opt',i});ch.appendChild(b)})}
   const sq=me.role==='client'&&me.seat!=null?me.seat:(me.role==='host'?0:S.cur);
   $('#squadTitle').textContent=sq===S.cur&&me.role==='local'?`Отряд: ${pl(sq).name}`:'Мой отряд';
   $('#squad').innerHTML=piecesOf(sq).map(pc=>{const h=pc.hero?HEROES[pc.hero]:null;
@@ -1206,8 +1413,8 @@ function onPieceClick(id){
   if(S.phase!=='rolled'||!S.opts)return;
   const idx=S.opts.map((o,i)=>o.id===id?i:-1).filter(i=>i>=0);
   if(!idx.length)return;
-  if(idx.length===1){act({k:'opt',i:idx[0]});return}
-  UI.choose=id;renderGame();
+  if(UI.sel===id&&idx.length===1){act({k:'opt',i:idx[0]});return}
+  UI.sel=id;sfx('tick');renderGame();
 }
 
 /* ===================== overlays ===================== */
@@ -1220,6 +1427,13 @@ function showDuel(d){
   const txt=d.res==='tie'?'Ничья 🤝':`Побеждает ${pname(d.res==='att'?A:D)} 💥`;
   fxShow(`<div class="duel"><h3>${d.ranged?'🏹 Выстрел':'⚔️ Дуэль'}</h3><div class="vs">${side(A,d.ar,d.ab,d.at,a)}<div class="mid">vs</div>${side(D,d.dr,d.db,d.dt,z)}</div><p class="res">${txt}</p></div>`,2000);
   const [r,c]=coordOf(D);burst(r,c,['#ffffff','#ffd36b','#ff8a3d'],18,{sp:.1});
+}
+function showBossDuel(d){
+  const A=P(d.a);
+  const side=(disc,nm,r,b,t,st)=>`<div class="side ${st}">${disc}<span class="nm2">${nm}</span><span class="bon">🎲 ${r}${b.map(x=>` + ${x[1]} ${x[0]}`).join('')}</span><span class="tot spin">${t}</span></div>`;
+  const a=d.res==='att'?'win':d.res==='def'?'lose':'',z=d.res==='def'?'win':d.res==='att'?'lose':'';
+  const txt=d.res==='tie'?'Ничья 🤝':d.res==='att'?`${pname(A)} побеждает змея! 🏆`:'Змееносец сильнее 🐍';
+  fxShow(`<div class="duel"><h3>⚔️ Битва со Змееносцем</h3><div class="vs">${side(discHtml(A),pname(A),d.ar,d.ab,d.at,a)}<div class="mid">vs</div>${side('<div class="disc" style="--c:#facc15;background:#3b0764;font-size:30px">🐍</div>','Змееносец',d.br,d.bb,d.bt,z)}</div><p class="res">${txt}</p></div>`,2100);
 }
 function showDecoy(d){const A=P(d.a),D=P(d.d);fxShow(`<div class="duel"><h3>Приманка! 🪞</h3><div class="vs"><div class="side">${discHtml(A)}<span class="nm2">${pname(A)}</span></div><div class="mid">→</div><div class="side">${discHtml(D)}<span class="nm2">${pname(D)}</span></div></div><p class="res">Удар пришёлся по двойнику.</p></div>`,1450)}
 function showFate(d){fxShow(`<div class="fate"><div class="k">Карта судьбы</div><h3>${esc(d.t)}</h3><p>${esc(d.d)}</p></div>`,2400)}
@@ -1266,10 +1480,11 @@ function bookPages(){
     `<h2>Ход</h2><p>Бросаешь кубик и двигаешь одну фишку по часовой стрелке. Обойдя поле, фишка сворачивает на свою цветную дорожку и идёт домой. Перебор не страшен: если выпало больше нужного, фишка всё равно заходит.</p><p>Шестёрка даёт ещё один бросок, но не больше трёх подряд.</p><p>Клетки ★ (старты) и ☆ (звёздные стоянки) безопасны: на них не бывает дуэлей и выстрелов.</p>`,
     `<h2>⚔️ Дуэли</h2><p>Встал на клетку врага, и начинается дуэль. Оба бросают кубик, атакующий получает +1, а сверху добавляются бонусы героев, сезона и трофеев.</p><p>Больше сумма, тот и победил. Ничья — обе фишки отскакивают на клетку назад.</p><p>Проигравший Странник улетает на базу. С базы можно выйти на любом броске, это тоже ход.</p>`,
     `<h2>⛓ Тюрьма</h2><p>Проигравший герой садится в тюрьму к победителю. Максимум два узника, третий просто улетит на базу.</p><p>Каждый узник даёт тюремщику +1 во всех дуэлях. Так что сажать выгодно.</p><h3>Как выйти</h3><p>В начале своего хода узник бросает кубик: 6 — побег прямо на старт. Через 2 хода его отпускают на базу. А если любая твоя фишка пройдёт через старт тюремщика, все твои узники освобождаются.</p>`,
-    `<h2>✺ Колесо Зодиака</h2><p>С клетки врат ✦ на броске 1 или 2 можно нырнуть в центр. Там тянешь карту судьбы, а на следующем ходу выходишь у противоположных врат, срезав полкруга.</p><p>Если в Колесе сидит враг, сначала дуэль за место.</p><h3>Карты судьбы</h3><p>${FATE.map(f=>`<b>${f.t}.</b> ${f.d}`).join('<br>')}</p>`,
+    `<h2>✺ Колесо Зодиака</h2><p>С клетки врат ✦ на броске 1, 2 или 3 можно нырнуть в центр. Там тянешь карту судьбы, а на следующем ходу выходишь у противоположных врат, срезав полкруга.</p><p>Если в Колесе сидит враг, сначала дуэль за место.</p><h3>Карты судьбы</h3><p>${FATE.map(f=>`<b>${f.t}.</b> ${f.d}`).join('<br>')}</p>`,
     `<h2>Сезоны и пробуждение</h2><p>Каждые 3 круга наступает новый сезон и усиливает одну стихию:</p><p>${EL_ORDER.map(e=>`${EL[e].icon} <b>${EL[e].season}:</b> ${EL[e].eff}`).join('<br>')}</p><h3>✨ Пробуждение звёзд</h3><p>С 11-го круга способности всех героев усиливаются. Это финальная, самая жёсткая часть партии.</p>`,
+    `<h2>🐍 Змееносец</h2><p>Тринадцатый знак и мини-босс. На ${BOSS.first}-м круге он выползает из Колеса и начинает охоту.</p><h3>Охота</h3><p>В начале каждого круга змей сам ползёт вперёд на 3–8 клеток и глотает фишки на своём пути: они улетают на базу. Безопасные клетки ★ и ☆ его не интересуют. За один бросок он съедает не больше одной фишки.</p><h3>Отдых</h3><p>После ${BOSS.hunt} кругов охоты он спит ${BOSS.rest} круга 💤, потом охотится снова. После второй спячки змей уползает и возвращается через ${BOSS.respawn} кругов, если его не победили раньше.</p><h3>Как его победить</h3><p>Встань на его клетку и сразись. Охотящийся змей получает +2, а спящего бить проще: +2 получаешь ты. Победитель продвигается на 5 клеток и перезаряжает все способности своего отряда. Через ${BOSS.respawn} кругов змей вернётся.</p><p>От укуса спасают приманка Близнецов и броня Тельца, а яд Скорпиона заставляет змея пропустить охоту.</p>`,
     heroPage('fire'),heroPage('earth'),heroPage('air'),heroPage('water'),
-    `<h2>Советы бывалых</h2><p>Странника не жалко: им удобно перекрывать путь и провоцировать дуэли.</p><p>Держись на расстоянии больше 6 клеток от врагов, если не хочешь дуэли.</p><p>Пленники — это сила. Два узника дают +2 к каждому броску в дуэли.</p><p>Реакции внизу поля — обязательная часть стратегии. Психологическое давление никто не отменял 😏</p>`
+    `<h2>Советы бывалых</h2><p>Странника не жалко: им удобно перекрывать путь и провоцировать дуэли.</p><p>Держись на расстоянии больше 6 клеток от врагов, если не хочешь дуэли.</p><p>Пленники — это сила. Два узника дают +2 к каждому броску в дуэли.</p><p>Нажми на фишку, и кружок покажет, куда она встанет: ⚔️ — дуэль, ⚠️ — опасно, 🛡️ — безопасно, 🐍 — змей.</p><p>Реакции внизу поля — обязательная часть стратегии. Психологическое давление никто не отменял 😏</p>`
   ].map(h=>h.startsWith('<div class="pg')?h:`<div class="pg">${h}</div>`);
 }
 function openBook(){BOOK.pages=bookPages();BOOK.i=0;renderBook();$('#book').classList.add('show');sfx('flip')}
@@ -1288,13 +1503,13 @@ function closeBook(){$('#book').classList.remove('show')}
 /* ===================== screens ===================== */
 function myName(){return cleanName(store.get('zz_name','')||'Игрок')}
 function showScreen(s){
-  UI.screen=s;['home','lobby','game'].forEach(x=>$('#scr'+x[0].toUpperCase()+x.slice(1)).classList.toggle('on',x===s));
+  UI.screen=s;if(s!=='game')document.body.className='';['home','lobby','game'].forEach(x=>$('#scr'+x[0].toUpperCase()+x.slice(1)).classList.toggle('on',x===s));
   const online=me.role==='host'||me.role==='client';
   $('#bMic').hidden=!online;$('#bLeave').hidden=!me.role;
   $('#bLeave').textContent=me.role==='host'?'Закрыть комнату':me.role==='client'?'Выйти':'На главную';
   if(s==='home')renderHome();
   if(s==='lobby')renderLobby();
-  if(s==='game'){if(S&&UI.gid!==S.gid)buildBoard();bindReacts($('#reactsGame'));$('#reactsGame').hidden=!online;renderGame();requestAnimationFrame(fxSize)}
+  if(s==='game'){if(innerWidth>700){$('#fSquad').open=true;$('#fLog').open=true}if(S&&UI.gid!==S.gid)buildBoard();bindReacts($('#reactsGame'));$('#reactsGame').hidden=!online;renderGame();requestAnimationFrame(fxSize)}
 }
 function renderHome(){
   const ring=$('#ring');if(!ring.childElementCount){ring.innerHTML=Object.keys(HEROES).map((k,i)=>{const a=i/12*Math.PI*2-Math.PI/2;return `<img src="${ICONS[k]}" alt="${HEROES[k].name}" style="left:${50+42*Math.cos(a)}%;top:${50+42*Math.sin(a)}%">`}).join('')+'<div class="core"><span>✺</span></div>'}
@@ -1311,7 +1526,7 @@ function renderHome(){
     acts.innerHTML=`<button class="btn big" id="hHost">Создать комнату</button><button class="btn alt big" id="hLocal">Играть на одном устройстве</button>`;
     $('#homeNote').textContent=onlineOK()?'Комната работает, пока ты в ней. Друзья заходят по твоей ссылке, а ты решаешь, кого впустить.':'Онлайн-комнаты работают, когда игра открыта с сайта (например, GitHub Pages) и есть интернет. На одном устройстве можно играть всегда.';
     $('#hHost').onclick=()=>{if(!onlineOK()){$('#homeErr').textContent='Онлайн-режим здесь недоступен: открой игру через GitHub Pages.';return}saveName();actx();hostCreate()};
-    $('#hLocal').onclick=()=>{saveName();actx();GEN++;me={role:'local',ctrl:'local',seat:null};S=null;L={mode:'local',goal:2,started:false,seats:[{kind:'human',name:myName(),pref:null},{kind:'bot',name:BOTNAMES[1]},{kind:'bot',name:BOTNAMES[2]},{kind:'bot',name:BOTNAMES[3]}]};showScreen('lobby')};
+    $('#hLocal').onclick=()=>{saveName();actx();GEN++;me={role:'local',ctrl:'local',seat:null};S=null;L={mode:'local',goal:2,timer:0,bots:'normal',skin:'wood',dice:store.get('zz_dice','classic'),started:false,seats:[{kind:'human',name:myName(),pref:null},{kind:'bot',name:BOTNAMES[1]},{kind:'bot',name:BOTNAMES[2]},{kind:'bot',name:BOTNAMES[3]}]};showScreen('lobby')};
   }
 }
 function elPicker(cur,seat){return `<div class="els" data-pick="${seat}">${EL_ORDER.map(k=>{const hs=Object.keys(HEROES).filter(h=>HEROES[h].el===k);return `<button class="elb" data-el="${k}" aria-pressed="${cur===k}"><b>${EL[k].icon} ${EL[k].name}</b><span class="ics">${hs.map(h=>`<img src="${ICONS[h]}" alt="${HEROES[h].name}" title="${HEROES[h].name}">`).join('')}</span></button>`}).join('')}</div>`}
@@ -1334,6 +1549,11 @@ function renderLobby(){
     }
     const mine=client&&i===me.seat?' (это ты)':'';
     return `<div class="seatRow" data-seat="${i}"><i class="dot" style="background:${SEATS[i].color}"></i><span class="who">${who}${mine}</span>${st}<span class="pref">${pref}</span>${ctl}</div>`}).join('');
+  const dicePick=cur=>`<div class="skins" data-dicepick>${Object.keys(DICE).map(k=>`<button class="skinb" data-dice="${k}" aria-pressed="${cur===k}"><span class="die d-${k}">${Array.from({length:9},(_,i)=>`<i class="${PIPS[5].includes(i)?'on':''}"></i>`).join('')}</span>${DICE[k]}</button>`).join('')}</div>`;
+  const setts=(host||local)?`<h3>Таймер хода</h3><span class="seg" id="tmSeg">${(local?[0,15,20,25]:[15,20,25]).map(v=>`<button data-tm="${v}" aria-pressed="${(L.timer||0)===v}">${v?v+' с':'Без таймера'}</button>`).join('')}</span>
+    <h3>Боты</h3><span class="seg" id="botSeg">${Object.keys(BOTLV).map(k=>`<button data-bl="${k}" aria-pressed="${(L.bots||'normal')===k}">${BOTLV[k]}</button>`).join('')}</span>
+    <h3>Поле</h3><div class="skins" id="skinPick">${Object.keys(SKINS).map(k=>`<button class="skinb" data-skin="${k}" aria-pressed="${(L.skin||'wood')===k}"><span class="mini" style="background:${SKINS[k].prev}"></span>${SKINS[k].name}</button>`).join('')}</div>
+    ${local?`<h3>Кубик</h3>${dicePick(L.dice||'classic')}`:''}`:`<p class="note">Таймер хода: ${L.timer?L.timer+' с':'нет'}. Боты: ${BOTLV[L.bots||'normal']}. Поле: ${SKINS[L.skin||'wood'].name}.</p>`;
   const goal=(host||local)?`<h3>Длина партии</h3><span class="seg" id="goalSeg">${[[2,'Быстрая: 2 фишки'],[3,'Обычная: 3'],[4,'Длинная: 4']].map(([g,l])=>`<button data-g="${g}" aria-pressed="${L.goal===g}">${l}</button>`).join('')}</span>`:`<p class="note">Чтобы победить, нужно завести домой фишек: ${L.goal}.</p>`;
   if(host){
     const link=linkFor(L.code,L.key);
@@ -1341,28 +1561,33 @@ function renderLobby(){
       <h3>Ссылка-приглашение</h3><div class="linkBox"><input class="in" id="lnk" readonly value="${esc(link)}"><button class="btn" id="cp">Копировать</button></div>
       <p class="note" id="expLine"></p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px"><span class="seg" id="expSeg">${[10,30,60,180].map(m=>`<button data-m="${m}" aria-pressed="${L.expMin===m}">${m<60?m+' мин':(m/60)+' ч'}</button>`).join('')}</span><button class="btn alt" id="newLink">Новая ссылка</button></div>
-      <h3>Кто может войти</h3><span class="seg" id="apSeg"><button data-a="1" aria-pressed="${L.approval}">Только с моего разрешения</button><button data-a="0" aria-pressed="${!L.approval}">Все по ссылке</button></span>
-      ${NET.pending.map((p,i)=>`<div class="knock"><b>🚪 ${esc(p.name)} стучится</b><button class="btn" data-acc="${i}">Впустить</button><button class="btn alt" data-dec="${i}">Отказать</button></div>`).join('')}
-      <p class="note">Комната живёт, пока открыта эта вкладка. Новая ссылка отменяет старую, а после начала партии зайти могут только те, кто уже был в комнате.</p></div>`;
+      <h3>Вход в комнату</h3><span class="seg" id="lockSeg"><button data-l="0" aria-pressed="${!L.locked}">Открыт, но только с моего разрешения</button><button data-l="1" aria-pressed="${!!L.locked}">Закрыт для всех</button></span>
+      ${NET.pending.map((p,i)=>`<div class="knock"><b>🚪 ${esc(p.name)} стучится${L.bannedNames.includes(p.name.toLowerCase())?' ⚠️ ты уже удалял игрока с таким именем':''}</b><button class="btn" data-acc="${i}">Впустить</button><button class="btn alt" data-dec="${i}">Отказать</button></div>`).join('')}
+      <p class="note">Без твоего разрешения никто не войдёт. Удалённые игроки больше не попадут в комнату. Новая ссылка отменяет старую, а после начала партии зайти могут только те, кто уже был в комнате.</p></div>`;
   } else if(client){
-    left=`<div class="card"><h2>Комната ${esc((L.code||'').toUpperCase())}</h2><p class="lead">Ты в комнате. Выбери стихию и жди, пока хозяин начнёт игру.</p>${me.seat!=null?`<h3>Твоя стихия</h3>${elPicker(L.seats[me.seat]&&L.seats[me.seat].pref,me.seat)}`:''}<div class="wait"><i></i>Ждём хозяина…</div></div>`;
+    left=`<div class="card"><h2>Комната ${esc((L.code||'').toUpperCase())}</h2><p class="lead">Ты в комнате. Выбери стихию и кубик и жди, пока хозяин начнёт игру.</p>${me.seat!=null&&L.seats[me.seat]?`<h3>Твоя стихия</h3>${elPicker(L.seats[me.seat].pref,me.seat)}<h3>Твой кубик</h3>${dicePick(L.seats[me.seat].dice||'classic')}`:''}<div class="wait"><i></i>Ждём хозяина…</div></div>`;
   } else {
     left=`<div class="card"><h2>Игра на одном устройстве</h2><p class="lead">Игроки ходят по очереди, передавая устройство. Каждый выбирает свою стихию.</p>${L.seats.map((s,i)=>s.kind==='human'?`<h3 style="color:${SEATS[i].color}">${esc(s.name||SEATS[i].name)}: стихия</h3>${elPicker(s.pref,i)}`:'').join('')}</div>`;
   }
-  if(host&&L.seats[0]){left+=`<div class="card" style="margin-top:14px"><h3 style="margin-top:0">Твоя стихия</h3>${elPicker(L.seats[0].pref,0)}</div>`}
-  right=`<div class="card"><h2>Игроки</h2>${seatRows}${goal}${(host||local)?`<p class="err" id="lobErr"></p><button class="btn big" id="startBtn" ${active<2?'disabled':''}>Начать игру</button>`:''}${active<2&&(host||local)?'<p class="note">Нужно хотя бы два участника: позови друга или добавь бота.</p>':''}</div>${(host||client)?`<div class="reacts" id="reactsLobby"></div>`:''}`;
+  if(host&&L.seats[0]){left+=`<div class="card" style="margin-top:14px"><h3 style="margin-top:0">Твоя стихия</h3>${elPicker(L.seats[0].pref,0)}<h3>Твой кубик</h3>${dicePick(L.seats[0].dice||'classic')}</div>`}
+  right=`<div class="card"><h2>Игроки</h2>${seatRows}${goal}${setts}${(host||local)?`<p class="err" id="lobErr"></p><button class="btn big" id="startBtn" ${active<2?'disabled':''}>Начать игру</button>`:''}${active<2&&(host||local)?'<p class="note">Нужно хотя бы два участника: позови друга или добавь бота.</p>':''}</div>${(host||client)?`<div class="reacts" id="reactsLobby"></div>`:''}`;
   $('#lobby').innerHTML=`<div>${left}</div><div>${right}</div>`;
   renderLobbyTimer();
   if(host||client)bindReacts($('#reactsLobby'));
   const cp=$('#cp');if(cp)cp.onclick=async()=>{try{await navigator.clipboard.writeText($('#lnk').value);cp.textContent='Скопировано ✓'}catch(e){$('#lnk').select()}setTimeout(()=>cp.textContent='Копировать',1500)};
   const es=$('#expSeg');if(es)es.onclick=e=>{const b=e.target.closest('[data-m]');if(!b)return;L.expMin=+b.dataset.m;L.exp=Date.now()+L.expMin*60e3;sendLobby();renderLobby()};
   const nl=$('#newLink');if(nl)nl.onclick=()=>{L.key=uid(6);L.exp=Date.now()+L.expMin*60e3;hostSave();renderLobby();toast('Ссылка','Старая ссылка больше не работает.')};
-  const ap=$('#apSeg');if(ap)ap.onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;L.approval=b.dataset.a==='1';sendLobby();renderLobby()};
+  const lk=$('#lockSeg');if(lk)lk.onclick=e=>{const b=e.target.closest('[data-l]');if(!b)return;L.locked=b.dataset.l==='1';if(L.locked){NET.pending.forEach(p=>send(p.conn,{t:'reject',why:'Хозяин закрыл вход в комнату.'}));NET.pending=[]}sendLobby();renderLobby()};
+  const tm=$('#tmSeg');if(tm)tm.onclick=e=>{const b=e.target.closest('[data-tm]');if(!b)return;L.timer=+b.dataset.tm;if(host)sendLobby();renderLobby()};
+  const bs=$('#botSeg');if(bs)bs.onclick=e=>{const b=e.target.closest('[data-bl]');if(!b)return;L.bots=b.dataset.bl;if(host)sendLobby();renderLobby()};
+  const sk=$('#skinPick');if(sk)sk.onclick=e=>{const b=e.target.closest('[data-skin]');if(!b)return;L.skin=b.dataset.skin;if(host)sendLobby();renderLobby()};
+  document.querySelectorAll('[data-dicepick]').forEach(box=>box.onclick=e=>{const b=e.target.closest('[data-dice]');if(!b)return;const v=b.dataset.dice;store.set('zz_dice',v);sfx('dice');
+    if(client){send(NET.hostConn,{t:'dice',v});L.seats[me.seat].dice=v}else if(host){L.seats[0].dice=v;sendLobby()}else{L.dice=v;L.seats.forEach(s=>{if(s.kind==='human')s.dice=v})}renderLobby()});
   document.querySelectorAll('[data-acc]').forEach(b=>b.onclick=()=>acceptMember(NET.pending[+b.dataset.acc]));
   document.querySelectorAll('[data-dec]').forEach(b=>b.onclick=()=>declineMember(NET.pending[+b.dataset.dec]));
   document.querySelectorAll('#lobby [data-kick]').forEach(b=>b.onclick=()=>{const s=+b.dataset.kick;if(confirm(`Удалить ${L.seats[s].name} из комнаты?`))kickSeat(s)});
   document.querySelectorAll('[data-seat-kind]').forEach(seg=>seg.onclick=e=>{const b=e.target.closest('[data-k]');if(!b)return;const i=+seg.dataset.seatKind,k=b.dataset.k;
-    if(local)L.seats[i]={kind:k,name:k==='human'?(i===0?myName():`Игрок ${i+1}`):k==='bot'?BOTNAMES[i]:'',pref:null};
+    if(local)L.seats[i]={kind:k,name:k==='human'?(i===0?myName():`Игрок ${i+1}`):k==='bot'?BOTNAMES[i]:'',pref:null,dice:L.dice||'classic'};
     else L.seats[i]=k==='bot'?{kind:'bot',name:BOTNAMES[i]}:{kind:'none'};
     if(host)sendLobby();renderLobby()});
   document.querySelectorAll('[data-pick]').forEach(box=>box.onclick=e=>{const b=e.target.closest('[data-el]');if(!b)return;const seat=+box.dataset.pick,el=b.dataset.el;
