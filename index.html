@@ -51,7 +51,7 @@ button{font:inherit;color:inherit}
 .err{color:var(--p0);font-size:14px;min-height:20px;margin:8px 0 0}
 
 /* home */
-.home{max-width:1100px;margin:0 auto;padding:24px 16px 40px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;min-height:calc(100vh - 70px)}
+.homeScr{max-width:1100px;margin:0 auto;padding:24px 16px 40px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;min-height:calc(100vh - 70px)}
 .ringWrap{display:grid;place-items:center}
 .ring{position:relative;width:min(420px,78vw);aspect-ratio:1;animation:rot 80s linear infinite}
 .ring img{position:absolute;width:15%;aspect-ratio:1;object-fit:contain;background:#fffaf0;border-radius:50%;padding:1.2%;box-shadow:0 4px 0 rgba(0,0,0,.18);transform:translate(-50%,-50%);animation:rot 80s linear infinite reverse}
@@ -251,7 +251,7 @@ button{font:inherit;color:inherit}
 .bclose{position:absolute;right:-6px;top:-10px;width:36px;height:36px;border-radius:50%;border:0;background:#f3d98a;color:#2e1a0b;font-size:18px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.4);z-index:2}
 
 @media (max-width:900px){
-  .home{grid-template-columns:1fr;gap:10px;padding-top:4px}
+  .homeScr{grid-template-columns:1fr;gap:10px;padding-top:4px}
   .lobby{grid-template-columns:1fr}
   .app{grid-template-columns:1fr;padding:8px 10px 24px}
   .boardWrap{max-width:100%}
@@ -284,7 +284,7 @@ button{font:inherit;color:inherit}
 </header>
 
 <section id="scrHome" class="screen">
-  <div class="home">
+  <div class="homeScr">
     <div class="ringWrap"><div class="ring" id="ring"></div></div>
     <div class="card homeCard">
       <h1>Зона Зодиака</h1>
