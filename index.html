@@ -734,7 +734,11 @@ class FakePeer extends Emitter{
 const onlineOK=()=>FAKE||!!window.Peer;
 function makePeer(id){
   if(FAKE)return new FakePeer(id);
-  const cfg={config:{iceServers:[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun1.l.google.com:19302'}]}};
+  const cfg={debug:0,config:{iceServers:[
+    {urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun1.l.google.com:19302'},
+    {urls:['turn:eu-0.turn.peerjs.com:3478','turn:us-0.turn.peerjs.com:3478'],username:'peerjs',credential:'peerjsp'},
+    {urls:['turn:openrelay.metered.ca:80','turn:openrelay.metered.ca:443','turn:openrelay.metered.ca:443?transport=tcp'],username:'openrelayproject',credential:'openrelayproject'}
+  ]}};
   return id?new window.Peer(id,cfg):new window.Peer(cfg);
 }
 function linkFor(code,key){return location.origin+location.pathname+'?room='+code+'&k='+key+(FAKE?'&net=local':'')}
@@ -750,7 +754,8 @@ function hostCreate(){
 function startHostPeer(){
   try{NET.peer&&NET.peer.destroy()}catch(e){}
   const p=makePeer('zz-'+L.code);NET.peer=p;NET.ready=false;
-  p.on('open',()=>{NET.ready=true;connMsg('');renderLobby()});
+  clearTimeout(NET.pt);NET.pt=setTimeout(()=>{if(!NET.ready)connMsg('Не получается открыть комнату: нет связи с сервером комнат. Проверь интернет, отключи VPN или блокировщик рекламы и обнови страницу.')},12000);
+  p.on('open',()=>{clearTimeout(NET.pt);NET.ready=true;connMsg('');renderLobby()});
   p.on('connection',c=>hostOnConn(c));
   p.on('call',c=>voiceOnCall(c));
   p.on('disconnected',()=>{try{p.reconnect()}catch(e){}});
@@ -859,8 +864,9 @@ function joinRoom(code,key){
   NET.token=store.get('zz_tok_'+code,null)||uid(12);store.set('zz_tok_'+code,NET.token);
   connMsg('Подключаемся к комнате…');
   try{NET.peer&&NET.peer.destroy()}catch(e){}
-  const p=makePeer();NET.peer=p;
-  p.on('open',()=>clientConnect());
+  const p=makePeer();NET.peer=p;NET.tries=0;
+  clearTimeout(NET.pt);NET.pt=setTimeout(()=>{if(!p.open&&!NET.closed)connMsg('Не получается связаться с сервером комнат. Проверь интернет, отключи VPN или блокировщик рекламы и обнови страницу.')},12000);
+  p.on('open',()=>{clearTimeout(NET.pt);connMsg('Сервер найден. Соединяемся с хозяином…');clientConnect()});
   p.on('call',c=>voiceOnCall(c));
   p.on('disconnected',()=>{try{p.reconnect()}catch(e){}});
   p.on('error',e=>{if(e&&e.type==='peer-unavailable'){connMsg('Комната не отвечает: хозяин не в сети. Пробуем снова…');clientRetry()}});
@@ -870,9 +876,12 @@ function clientConnect(){
   if(NET.closed)return;
   try{NET.hostConn&&NET.hostConn.close()}catch(e){}
   const c=NET.peer.connect('zz-'+NET.code,{reliable:true});NET.hostConn=c;if(!c)return;
-  c.on('open',()=>{NET.lastHost=Date.now();send(c,{t:'hello',token:NET.token,name:myName(),key:NET.key})});
+  NET.tries=(NET.tries||0)+1;clearTimeout(NET.ct);
+  NET.ct=setTimeout(()=>{if(c!==NET.hostConn||c.open||NET.closed)return;connMsg(NET.tries>=2?'Соединение не проходит. Попробуйте оба переключиться на Wi‑Fi (или оба на мобильный интернет), отключить VPN и проверить, что вкладка хозяина открыта. Пробуем снова…':'Соединение идёт дольше обычного. Ещё пробуем…');try{c.close()}catch(e){}clientRetry()},15000);
+  c.on('open',()=>{clearTimeout(NET.ct);connMsg('Соединились! Стучимся к хозяину…');NET.lastHost=Date.now();send(c,{t:'hello',token:NET.token,name:myName(),key:NET.key})});
   c.on('data',d=>{if(c!==NET.hostConn)return;NET.lastHost=Date.now();try{clientOnData(d)}catch(e){console.error(e)}});
-  c.on('close',()=>{if(c===NET.hostConn)clientLost()});
+  c.on('close',()=>{if(c===NET.hostConn&&c.open!==false)clientLost();else if(c===NET.hostConn)clientRetry()});
+  c.on('error',()=>{if(c===NET.hostConn)clientRetry()});
 }
 function clientLost(){if(NET.closed)return;connMsg('Связь с хозяином потеряна. Переподключаемся…');clientRetry()}
 function clientRetry(){clearTimeout(NET.rt);NET.rt=setTimeout(()=>{if(!NET.closed)clientConnect()},3000)}
